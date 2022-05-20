@@ -14,18 +14,18 @@ Um projeto para o meu trabalho da mateira de raciocínio lógico, e é sobre uma
 
 ### Visual
 
-- [ ] Fundo da tela do jogo modificada (alterar cor ou incluir imagem)
-- [ ] novo sprite do canhão (usar outra imagem)
-- [ ] novos sprites dos alienígenas (usar imagens diferentes para cada linha)
-- [ ] Velocidade inicial dos alienígenas modificada (para menor)
-- [ ] Texto no final do jogo modificado (alterar mensagem e características da fonte: tipo, tamanho e cor)
+- [x] Fundo da tela do jogo modificada (alterar cor ou incluir imagem)
+- [x] novo sprite do canhão (usar outra imagem)
+- [x] novos sprites dos alienígenas (usar imagens diferentes para cada linha)
+- [x] Velocidade inicial dos alienígenas modificada (para menor)
+- [x] Texto no final do jogo modificado (alterar mensagem e características da fonte: tipo, tamanho e cor)
 
 ### Jogabilidade
 
 - [ ] Tiros de laser disparados aleatoriamente pelos alienígenas em direção do canhão
 - [ ] Naves vermelhas surgem ocasionalmente na parte superior da tela, indo da direita para esquerda ou vice-versa
 - [ ] O jogador começará o jogo com três vidas. Quando o canhão for atingido por um laser inimigo, o jogador perde uma vida
-- [ ]  Pontuação do jogador. Cada alienígena atingido possui pontos diferentes:
+- [ ] Pontuação do jogador. Cada alienígena atingido possui pontos diferentes:
     - Primeira e segunda filas: 10 pontos
     - Terceira e quarta filas: 20 pontos
     - Quinta fila: 40 pontos
