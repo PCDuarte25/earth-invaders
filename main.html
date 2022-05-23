@@ -3,15 +3,20 @@
     <canvas id="background" width="400" height="600"></canvas> <!-- dimensões do background estático-->
 </div> 
 <div class="tabela">
-    <p class="canhaoX">canhaoX = 0</p>
+    <!-- <p class="canhaoX">canhaoX = 0</p>
     <p class="canhaoY">canhaoY = 0</p>
     <p class="missilX">missilX = 0</p>
     <p class="missilY">missilY = 0</p>
     <p class="alienX">alienX = 0</p>
     <p class="alienY">alienY = 0</p>
-    <p class="alienAtirador">alien atirador = 0 | linha = 0 | coluna = 0</p>
+    <p class="alienAtirador">alien atirador = 0 | linha = 0 | coluna = 0</p> -->
+    <p class="naveX">naveX = 0</p>
+    <p class="naveY">naveY = 0</p>
+    <p class="laserX">laserX = 0</p>
+    <p class="laserY">laserY = 0</p>
+    <!-- <p class="posicaoNave">posição nave = 0</p>
     <p class="mouseX">mouseX = 0</p>
-    <p class="mouseY">mouseY = 0</p>
+    <p class="mouseY">mouseY = 0</p> -->
 </div>
 
 <style>
@@ -46,15 +51,20 @@
 
 // Programa principal
 
-const t_canhaoX = document.querySelector('.canhaoX');
-const t_canhaoY = document.querySelector('.canhaoY');
-const t_missilX = document.querySelector('.missilX');
-const t_missilY = document.querySelector('.missilY');
-const t_alienX = document.querySelector('.alienX');
-const t_alienY = document.querySelector('.alienY');
-const t_alienAtirador = document.querySelector('.alienAtirador');
-const t_mouseX = document.querySelector('.mouseX');
-const t_mouseY = document.querySelector('.mouseY');
+// const t_canhaoX = document.querySelector('.canhaoX');
+// const t_canhaoY = document.querySelector('.canhaoY');
+// const t_missilX = document.querySelector('.missilX');
+// const t_missilY = document.querySelector('.missilY');
+// const t_alienX = document.querySelector('.alienX');
+// const t_alienY = document.querySelector('.alienY');
+// const t_alienAtirador = document.querySelector('.alienAtirador');
+// const t_mouseX = document.querySelector('.mouseX');
+// const t_mouseY = document.querySelector('.mouseY');
+const t_naveX = document.querySelector('.naveX');
+const t_naveY = document.querySelector('.naveY');
+const t_laserX = document.querySelector('.laserX');
+const t_laserY = document.querySelector('.laserY');
+
 
 var tela;
 var c;
@@ -74,14 +84,22 @@ var missilX = 0;
 var missilY = 0;
 var alienX = 0;
 var alienY = 0;
+var naveY = 15;
+var naveX = 399;
 var metadeDoAlienX = 5;
 var inicioLaser = false;
 var missilFoiDisparado = false;
+var naveComecou = false
+var naveComecouEsquerda = false;
+var naveComecouDireita = false;
+var jogoAcabou = false;
 var impactoLaserX;
 var laserMovendo;
 var missilMovendo;
 var intervalo = 17;
 var posicao = 0;
+var posicaoNave = 0;
+var intervaloAparecerNave;
 
 var alienLinhas = [10, 38, 66, 94, 122, 150, 178, 206, 234, 262, 290];
 var alienColunas = [55, 85, 115, 145, 175];
@@ -101,7 +119,6 @@ iniciar(); // Chama função inicial do jogo
 
 // Sub-rotinas (funções)
 
-
 function iniciar() {
     tela = document.getElementById("tela");
     background = document.getElementById("background");
@@ -114,11 +131,22 @@ function iniciar() {
     
 	setInterval("moverAliens()", intervalo);
     setInterval("alienAtingido()", 6);
+    
+    if(!naveComecou) {
+        intervaloAparecerNave = setInterval(defineChanceAparecerNave, 4000);
+    }
 
-    tela.addEventListener('mousemove', (e) => {
-        t_mouseX.textContent = `mouseX = ${e.offsetX}`;
-        t_mouseY.textContent = `mouseY = ${e.offsetY}`;
-    });
+    // tela.addEventListener('mousemove', (e) => {
+    //     t_mouseX.textContent = `mouseX = ${e.offsetX}`;
+    //     t_mouseY.textContent = `mouseY = ${e.offsetY}`;
+    // });
+}
+
+function defineChanceAparecerNave() {
+    let chanceNaveAparecer = parseFloat(Math.random().toFixed(1));
+    if(chanceNaveAparecer <= 0.2) {
+        defineComecoNave();
+    }
 }
 
 function posicionarAlien() {
@@ -157,6 +185,9 @@ function carregarImagens() {
     missil = new Image();
     missil.src = "sprites/missil.png"
 
+    naveEspecial = new Image();
+    naveEspecial.src = "sprites/special-ship.png"
+
     backgroundImage = new Image()
     backgroundImage.src = "sprites/background.png";
     backgroundImage.onload = function(){
@@ -183,8 +214,8 @@ function moverAliens(){
         posicao = 0;
     }
     
-    t_alienX.textContent = `alienX = ${alienX}` 
-    t_alienY.textContent = `alienY = ${alienY}` 
+    // t_alienX.textContent = `alienX = ${alienX}` 
+    // t_alienY.textContent = `alienY = ${alienY}` 
 
     for (var i = 0; i < aliensRestantes.length; i++){
 
@@ -212,7 +243,56 @@ function moverAliens(){
             break;
         }
     }
+}
 
+function defineComecoNave() {
+    naveComecou = true;
+    let comecoOuFim = Math.floor(Math.random() * 2);
+    if (comecoOuFim === 1) {
+        naveX = 0;
+        naveComecouEsquerda = true;
+        naveComecouDireita = false;
+    } else {
+        naveComecouDireita = true;
+        naveComecouEsquerda = false;
+        naveX = 400;
+    }
+}
+
+function moverNave() {
+    if(naveComecou) {
+        if (naveX >= 0 && naveComecouEsquerda) {
+            naveX += 1;
+        } 
+
+        if(naveX > 400 && naveComecouEsquerda) {
+            naveComecou = false;
+        }
+
+        if(naveX <= 400 && naveComecouDireita) {
+            naveX -= 1;
+        }
+
+        if(naveX < -52 && naveComecouDireita) {
+            naveComecou = false;
+        }
+
+        t_naveX.textContent = `naveX = ${naveX}`;
+        t_naveY.textContent = `naveY = ${naveY}`;
+
+        c.clearRect(naveX -1, naveY, 52, 37);
+        c.drawImage(naveEspecial, naveX, naveY);
+    }
+}
+
+let comecoMoverNave = setInterval(moverNave, 6);
+
+function laserAcertouNave(){
+    if(naveComecou){
+        if ((laserY + 19 >= naveY - 30) && laserY + 19 <= naveY) {
+            console.log('acertou');
+        }
+    }
 }
 
 function alienAtingido(){
@@ -236,7 +316,7 @@ function alienAtingido(){
 }
 
 function missilAcertouCanhao(){
-    if((missilY - 27 >= canhaoY) 
+    if ((missilY - 27 >= canhaoY) 
             && (missilY - 27 <= canhaoY + 30) 
             && (missilX >= canhaoX - 5)
             && (missilX <= canhaoX + 25)){
@@ -245,15 +325,19 @@ function missilAcertouCanhao(){
 }
 
 function fimDeJogo(){
+    clearInterval(intervaloAparecerNave);
     canhaoX = 180;
     laserX = 193;
     laserY = 520;
     alienX = 0;
     alienY = 0;
     posicao = 0;
+    naveX = 0;
+    naveY = 0;
     aliensRestantes = [];
     inicioLaser = false;
     missilFoiDisparado = false;
+    naveComecou = false;
     missilY = 650;
 	
     c.fillStyle = "black";
@@ -291,11 +375,9 @@ function moverCanhao(tecla){
         laserMovendo = setInterval("dispararLaser()", 5);
     }
 
-    t_canhaoX.textContent = `canhaoX = ${canhaoX}`;
-    t_canhaoY.textContent = `canhaoY = ${canhaoY}`;
+    // t_canhaoX.textContent = `canhaoX = ${canhaoX}`;
+    // t_canhaoY.textContent = `canhaoY = ${canhaoY}`;
 }
-
-
 
 function dispararLaser(){
     if (inicioLaser && (laserY >= 60)){
@@ -312,6 +394,9 @@ function dispararLaser(){
         inicioLaser = false;
         laserY = 520;
     }
+
+    t_laserX.textContent = `laserX = ${laserX}`
+    t_laserY.textContent = `laserY = ${laserY}`
 }
 
 function defineAtirador() {
@@ -322,7 +407,7 @@ function defineAtirador() {
         const indiceAlienAtual = colunaAtiradora * 5 + linhaAtual;
         alienAtual = aliensRestantes[indiceAlienAtual];
         if (!alienAtual.foiAtingido) {
-            t_alienAtirador.textContent = `alien atirador = ${indiceAlienAtual} | linha = ${linhaAtual} | coluna = ${colunaAtiradora}`
+            // t_alienAtirador.textContent = `alien atirador = ${indiceAlienAtual} | linha = ${linhaAtual} | coluna = ${colunaAtiradora}`
             return alienAtual;
             c.drawImage(missil, metadeDoAlienX + alienAtual.posX, alienAtual.posY + 33 + missilY);
         } 
@@ -347,13 +432,12 @@ function disparaMissil(alienAtual, posX){
 
     missilAcertouCanhao()
 
-    t_missilY.textContent = `missilY = ${missilY}`
-    t_missilX.textContent = `missilX = ${missilX}`
+    // t_missilY.textContent = `missilY = ${missilY}`
+    // t_missilX.textContent = `missilX = ${missilX}`
     
     if (missilY >= 635) {
         clearInterval(missilMovendo);
         missilFoiDisparado = false;
-        // missilY = 200 - alienY - alienAtual.posY - 33;
         missilY = alienY + alienAtual.posY + 33;
     }
 }
