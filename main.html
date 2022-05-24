@@ -2,6 +2,12 @@
     <canvas id="tela" width="400" height="600"></canvas> <!-- dimensões do espaço jogável-->
     <canvas id="background" width="400" height="600"></canvas> <!-- dimensões do background estático-->
 </div> 
+
+<div class="vidas">
+    <img class="vida-tres" src="sprites/canhao.png" alt="#">
+    <img class="vida-dois" src="sprites/canhao.png" alt="#">
+    <img class="vida-um" src="sprites/canhao.png" alt="#">
+</div>
 <div class="tabela">
     <!-- <p class="canhaoX">canhaoX = 0</p>
     <p class="canhaoY">canhaoY = 0</p>
@@ -37,9 +43,44 @@
     #tela {
         z-index: 2;
     }
+    
     .tabela {
         position: absolute;
         left: 500px;
+    }
+
+    .vidas {
+        position: absolute;
+        z-index: 3;
+        bottom: 320;
+        left: 10;
+    }
+
+    @keyframes desaparece {
+        0% {
+            opacity: 0;
+        }
+        25% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+        75% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            transform: translateX(0) scale(0.5);
+        }
+    }
+
+    .perder-vida {
+        animation: desaparece 1s ease-in-out;
+    }
+
+    .sumir {
+        opacity: 0;
     }
 </style>
 
@@ -65,6 +106,10 @@ const t_naveY = document.querySelector('.naveY');
 const t_laserX = document.querySelector('.laserX');
 const t_laserY = document.querySelector('.laserY');
 const t_naveApareceu = document.querySelector('.naveApareceu');
+const elementosVidas = document.querySelector('.vidas');
+const vidaUm = document.querySelector('.vida-um');
+const vidaDois = document.querySelector('.vida-dois');
+const vidaTres = document.querySelector('.vida-tres');
 
 var tela;
 var c;
@@ -93,6 +138,7 @@ var naveComecou = false
 var naveComecouEsquerda = false;
 var naveComecouDireita = false;
 var jogoAcabou = false;
+var acertouNaveEspecial = false;
 var impactoLaserX;
 var laserMovendo;
 var missilMovendo;
@@ -100,7 +146,7 @@ var intervalo = 17;
 var posicao = 0;
 var intervaloAparecerNave;
 var intervaloMoverNave = 0;
-var acertouNaveEspecial = false;
+var vidas = 3;
 
 var alienLinhas = [10, 38, 66, 94, 122, 150, 178, 206, 234, 262, 290];
 var alienColunas = [55, 85, 115, 145, 175];
@@ -251,7 +297,6 @@ function moverAliens(){
 }
 
 function defineComecoNave() {
-    // console.debug("defineComecoNave")
     naveComecou = true;
     acertouNaveEspecial = false;
     let comecoOuFim = Math.floor(Math.random() * 2);
@@ -267,12 +312,10 @@ function defineComecoNave() {
 }
 
 function moverNave() {
-    console.log(naveComecou);
     if(!naveComecou) return;
 
     laserAcertouNave()
 
-    // console.debug(`moverNave naveComecou=${naveComecou}`);
     if (naveComecouEsquerda) {
         naveX += 3;
     } 
@@ -335,13 +378,17 @@ function missilAcertouCanhao(){
             && (missilY - 27 <= canhaoY + 30) 
             && (missilX >= canhaoX - 5)
             && (missilX <= canhaoX + 25)){
-        fimDeJogo();
+        vidas--;
+        if(vidas === 0) {
+            fimDeJogo();
+        }
+        return true;
     }
+    return false;
 }
 
 function fimDeJogo(){
     clearInterval(intervaloAparecerNave);
-    canhaoX = 180;
     laserX = 193;
     laserY = 520;
     alienX = 0;
@@ -354,6 +401,7 @@ function fimDeJogo(){
     missilFoiDisparado = false;
     naveComecou = false;
     missilY = 650;
+    elementosVidas.style.display = 'none';
 	
     c.fillStyle = "black";
 	c.fillRect(0, 0, C_LARGURA, C_ALTURA);
@@ -388,7 +436,6 @@ function moverCanhao(tecla){
         c.drawImage(laser, laserX, laserY);
         impactoLaserX = laserX;
         laserMovendo = setInterval("dispararLaser()", 10);
-        // console.debug(`setInterval: laserMovendo=${laserMovendo}`);
     }
 
     // t_canhaoX.textContent = `canhaoX = ${canhaoX}`;
@@ -406,7 +453,6 @@ function dispararLaser(){
     }
 	
     if (laserY < 0){
-        // console.debug(`clearInterval: laserMovendo=${laserMovendo}`);
         clearInterval(laserMovendo);
         inicioLaser = false;
         laserY = 520;
@@ -447,8 +493,16 @@ function disparaMissil(alienAtual, posX){
     c.drawImage(missil, posX, missilY - 27);
     missilY += 10;
 
-    missilAcertouCanhao()
+    if(missilAcertouCanhao()) {
+        clearInterval(missilMovendo);
+        missilFoiDisparado = false;
+        c.clearRect((posX), (missilY - 37), 10, 27);
+        if (vidas != 0) {
+            c.drawImage(canhao, canhaoX, canhaoY);
+        }
+    }
 
+    removeVida();
     // t_missilY.textContent = `missilY = ${missilY}`
     // t_missilX.textContent = `missilX = ${missilX}`
     
@@ -456,6 +510,18 @@ function disparaMissil(alienAtual, posX){
         clearInterval(missilMovendo);
         missilFoiDisparado = false;
         missilY = alienY + alienAtual.posY + 33;
+    }
+}
+
+function removeVida() {
+    if (vidas === 2) {
+        vidaUm.classList.add("perder-vida", "sumir");
+    }
+    if (vidas === 1) {
+        vidaDois.classList.add("perder-vida", "sumir");
+    }
+    if (vidas === 0) {
+        vidaTres.classList.add("sumir");
     }
 }
 </script>
