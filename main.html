@@ -14,9 +14,9 @@
     <p class="naveY">naveY = 0</p>
     <p class="laserX">laserX = 0</p>
     <p class="laserY">laserY = 0</p>
-    <!-- <p class="posicaoNave">posição nave = 0</p>
     <p class="mouseX">mouseX = 0</p>
-    <p class="mouseY">mouseY = 0</p> -->
+    <p class="mouseY">mouseY = 0</p>
+    <p class="naveApareceu">Nave apareceu = não, numero sorteado = </p>
 </div>
 
 <style>
@@ -58,13 +58,13 @@
 // const t_alienX = document.querySelector('.alienX');
 // const t_alienY = document.querySelector('.alienY');
 // const t_alienAtirador = document.querySelector('.alienAtirador');
-// const t_mouseX = document.querySelector('.mouseX');
-// const t_mouseY = document.querySelector('.mouseY');
+const t_mouseX = document.querySelector('.mouseX');
+const t_mouseY = document.querySelector('.mouseY');
 const t_naveX = document.querySelector('.naveX');
 const t_naveY = document.querySelector('.naveY');
 const t_laserX = document.querySelector('.laserX');
 const t_laserY = document.querySelector('.laserY');
-
+const t_naveApareceu = document.querySelector('.naveApareceu');
 
 var tela;
 var c;
@@ -98,8 +98,9 @@ var laserMovendo;
 var missilMovendo;
 var intervalo = 17;
 var posicao = 0;
-var posicaoNave = 0;
 var intervaloAparecerNave;
+var intervaloMoverNave = 0;
+var acertouNaveEspecial = false;
 
 var alienLinhas = [10, 38, 66, 94, 122, 150, 178, 206, 234, 262, 290];
 var alienColunas = [55, 85, 115, 145, 175];
@@ -132,20 +133,24 @@ function iniciar() {
 	setInterval("moverAliens()", intervalo);
     setInterval("alienAtingido()", 6);
     
-    if(!naveComecou) {
-        intervaloAparecerNave = setInterval(defineChanceAparecerNave, 4000);
-    }
+    intervaloAparecerNave = setInterval(defineChanceAparecerNave, 4000);
+    intervaloMoverNave = setInterval(moverNave, 18);
 
-    // tela.addEventListener('mousemove', (e) => {
-    //     t_mouseX.textContent = `mouseX = ${e.offsetX}`;
-    //     t_mouseY.textContent = `mouseY = ${e.offsetY}`;
-    // });
+    tela.addEventListener('mousemove', (e) => {
+        t_mouseX.textContent = `mouseX = ${e.offsetX}`;
+        t_mouseY.textContent = `mouseY = ${e.offsetY}`;
+    });
 }
 
 function defineChanceAparecerNave() {
+    if(naveComecou) return;
+
     let chanceNaveAparecer = parseFloat(Math.random().toFixed(1));
-    if(chanceNaveAparecer <= 0.2) {
+    if(chanceNaveAparecer <= 0.8) {
+        t_naveApareceu.textContent = `nave apareceu = sim, numero sorteado = ${chanceNaveAparecer}`
         defineComecoNave();
+    } else {
+        t_naveApareceu.textContent = `nave apareceu = não, numero sorteado = ${chanceNaveAparecer}`
     }
 }
 
@@ -246,7 +251,9 @@ function moverAliens(){
 }
 
 function defineComecoNave() {
+    // console.debug("defineComecoNave")
     naveComecou = true;
+    acertouNaveEspecial = false;
     let comecoOuFim = Math.floor(Math.random() * 2);
     if (comecoOuFim === 1) {
         naveX = 0;
@@ -260,38 +267,46 @@ function defineComecoNave() {
 }
 
 function moverNave() {
-    if(naveComecou) {
-        if (naveX >= 0 && naveComecouEsquerda) {
-            naveX += 1;
-        } 
+    console.log(naveComecou);
+    if(!naveComecou) return;
 
-        if(naveX > 400 && naveComecouEsquerda) {
-            naveComecou = false;
-        }
+    laserAcertouNave()
 
-        if(naveX <= 400 && naveComecouDireita) {
-            naveX -= 1;
-        }
+    // console.debug(`moverNave naveComecou=${naveComecou}`);
+    if (naveComecouEsquerda) {
+        naveX += 3;
+    } 
 
-        if(naveX < -52 && naveComecouDireita) {
-            naveComecou = false;
-        }
-
-        t_naveX.textContent = `naveX = ${naveX}`;
-        t_naveY.textContent = `naveY = ${naveY}`;
-
-        c.clearRect(naveX -1, naveY, 52, 37);
-        c.drawImage(naveEspecial, naveX, naveY);
+    if(naveX > 400 && naveComecouEsquerda) {
+        naveComecou = false;
     }
+
+    if(naveComecouDireita) {
+        naveX -= 3;
+    }
+
+    if(naveX < -52 && naveComecouDireita) {
+        naveComecou = false;
+    }
+
+    t_naveX.textContent = `naveX = ${naveX}`;
+    t_naveY.textContent = `naveY = ${naveY}`;
+    
+    const offset = naveComecouEsquerda ? -3 : 3;
+
+    if(acertouNaveEspecial) return;
+
+    c.clearRect(naveX + offset, naveY, 52, 37);
+    c.drawImage(naveEspecial, naveX, naveY);
 }
 
-let comecoMoverNave = setInterval(moverNave, 6);
-
 function laserAcertouNave(){
-    if(naveComecou){
-        if ((laserY + 19 >= naveY - 30) && laserY + 19 <= naveY) {
-            console.log('acertou');
-        }
+    if ((laserY <= naveY + 30 && laserY !== 0) && (laserY >= naveY) && (impactoLaserX >= naveX) && (impactoLaserX + 6 <= naveX + 55)) {
+        acertouNaveEspecial = true;
+        c.clearRect(naveX - 1, naveY - 1, 400, 37);
+        naveComecou = false;
+        c.clearRect(impactoLaserX, laserY, 6, 19);
+        laserY = 0;
     }
 }
 
@@ -372,7 +387,8 @@ function moverCanhao(tecla){
         inicioLaser = true;
         c.drawImage(laser, laserX, laserY);
         impactoLaserX = laserX;
-        laserMovendo = setInterval("dispararLaser()", 5);
+        laserMovendo = setInterval("dispararLaser()", 10);
+        // console.debug(`setInterval: laserMovendo=${laserMovendo}`);
     }
 
     // t_canhaoX.textContent = `canhaoX = ${canhaoX}`;
@@ -380,16 +396,17 @@ function moverCanhao(tecla){
 }
 
 function dispararLaser(){
-    if (inicioLaser && (laserY >= 60)){
-        laserY -= 10;
-        c.clearRect(impactoLaserX, (laserY + 10), 6, 19);
+    if (inicioLaser && (laserY >= 0)){
+        laserY -= 20;
+        c.clearRect(impactoLaserX, (laserY + 20), 6, 19);
 		
-        if (laserY >= 70){
+        if (laserY >= 0){
             c.drawImage(laser, impactoLaserX, laserY);
         }
     }
 	
-    if (laserY < 60){
+    if (laserY < 0){
+        // console.debug(`clearInterval: laserMovendo=${laserMovendo}`);
         clearInterval(laserMovendo);
         inicioLaser = false;
         laserY = 520;
