@@ -257,7 +257,37 @@ const TECLA_ESQUERDA = 37;
 const TECLA_DIREITA = 39;
 const TECLA_ACIMA = 38;
 
-onkeydown = moverCanhao; // Define função chamada ao se pressionar uma tecla
+var map = {};
+onkeydown = onkeyup = function(e){
+    map[e.keyCode] = e.type == 'keydown';
+
+    if (map[TECLA_ESQUERDA]) {
+        if (canhaoX >= 9){
+            c.clearRect(canhaoX, 537, 31, 19);
+            canhaoX -= 8;
+            laserX -= 8;
+            c.drawImage(canhao, canhaoX, canhaoY);
+        }
+    }
+
+    if (map[TECLA_DIREITA]) {
+        if (canhaoX <= 360) {
+            c.clearRect(canhaoX, 537, 31, 19);
+            canhaoX += 8;
+            laserX += 8;
+            c.drawImage(canhao, canhaoX, canhaoY);
+        }
+    }
+
+    if (map[TECLA_ACIMA]) {
+        if (!inicioLaser) {
+            inicioLaser = true;
+            c.drawImage(laser, laserX, laserY);
+            impactoLaserX = laserX;
+            laserMovendo = setInterval("dispararLaser()", 10);
+        }   
+    }
+}
 
 iniciar(); // Chama função inicial do jogo
 
@@ -558,34 +588,6 @@ function fimDeJogo(){
     c.fillText("Fim de Jogo", C_LARGURA/2, C_ALTURA/2);
 
     onkeydown = null;
-}
-
-function moverCanhao(tecla){
-    var codigo = tecla.keyCode;
-    
-    if ((codigo == TECLA_DIREITA) && (canhaoX <= 360)){
-        c.clearRect(canhaoX, 537, 31, 19);
-        canhaoX += 8;
-        laserX += 8;
-		c.drawImage(canhao, canhaoX, canhaoY);
-    }
-    
-    if ((codigo == TECLA_ESQUERDA) && (canhaoX >= 9)){
-        c.clearRect(canhaoX, 537, 31, 19);
-        canhaoX -= 8;
-        laserX -= 8;
-		c.drawImage(canhao, canhaoX, canhaoY);
-    }
-    
-    if ((codigo == TECLA_ACIMA) && !inicioLaser){
-        inicioLaser = true;
-        c.drawImage(laser, laserX, laserY);
-        impactoLaserX = laserX;
-        laserMovendo = setInterval("dispararLaser()", 10);
-    }
-
-    // t_canhaoX.textContent = `canhaoX = ${canhaoX}`;
-    // t_canhaoY.textContent = `canhaoY = ${canhaoY}`;
 }
 
 function dispararLaser(){
