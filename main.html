@@ -1,13 +1,15 @@
 <div id="stage">
+    <div class="game-container">
+        <div class="vidas">
+            <img class="vida-tres" src="sprites/canhao.png" alt="#">
+            <img class="vida-dois" src="sprites/canhao.png" alt="#">
+            <img class="vida-um" src="sprites/canhao.png" alt="#">
+        </div>
+    </div>
     <canvas id="tela" width="400" height="600"></canvas> <!-- dimensões do espaço jogável-->
-    <canvas id="background" width="400" height="600"></canvas> <!-- dimensões do background estático-->
+    <canvas id="background" width="400" height="600"></canvas> <!-- dimensões do background estático -->
 </div> 
 
-<div class="vidas">
-    <img class="vida-tres" src="sprites/canhao.png" alt="#">
-    <img class="vida-dois" src="sprites/canhao.png" alt="#">
-    <img class="vida-um" src="sprites/canhao.png" alt="#">
-</div>
 <div class="tabela">
     <!-- <p class="canhaoX">canhaoX = 0</p>
     <p class="canhaoY">canhaoY = 0</p>
@@ -46,14 +48,19 @@
     
     .tabela {
         position: absolute;
-        left: 500px;
+    }
+
+    .game-container {
+        width: 400px;
+        height: 600px;
+        position: absolute;
     }
 
     .vidas {
         position: absolute;
         z-index: 3;
-        bottom: 320;
-        left: 10;
+        bottom: 0px;
+        left: 10px;
     }
 
     @keyframes desaparece {
@@ -179,7 +186,7 @@ function iniciar() {
 	setInterval("moverAliens()", intervalo);
     setInterval("alienAtingido()", 6);
     
-    intervaloAparecerNave = setInterval(defineChanceAparecerNave, 4000);
+    intervaloAparecerNave = setInterval(defineChanceAparecerNave, 5000);
     intervaloMoverNave = setInterval(moverNave, 18);
 
     tela.addEventListener('mousemove', (e) => {
@@ -192,7 +199,7 @@ function defineChanceAparecerNave() {
     if(naveComecou) return;
 
     let chanceNaveAparecer = parseFloat(Math.random().toFixed(1));
-    if(chanceNaveAparecer <= 0.8) {
+    if(chanceNaveAparecer <= 0.2) {
         t_naveApareceu.textContent = `nave apareceu = sim, numero sorteado = ${chanceNaveAparecer}`
         defineComecoNave();
     } else {
