@@ -25,7 +25,7 @@ Um projeto para o meu trabalho da mateira de raciocínio lógico, e é sobre uma
 - [x] Tiros de laser disparados aleatoriamente pelos alienígenas em direção do canhão
 - [x] Naves vermelhas surgem ocasionalmente na parte superior da tela, indo da direita para esquerda ou vice-versa
 - [x] O jogador começará o jogo com três vidas. Quando o canhão for atingido por um laser inimigo, o jogador perde uma vida
-- [ ] Pontuação do jogador. Cada alienígena atingido possui pontos diferentes:
+- [X] Pontuação do jogador. Cada alienígena atingido possui pontos diferentes:
     - Primeira e segunda filas: 10 pontos
     - Terceira e quarta filas: 20 pontos
     - Quinta fila: 40 pontos

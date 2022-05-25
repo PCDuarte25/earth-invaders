@@ -1,9 +1,15 @@
 <div id="stage">
     <div class="game-container">
-        <div class="vidas">
-            <img class="vida-tres" src="sprites/canhao.png" alt="#">
-            <img class="vida-dois" src="sprites/canhao.png" alt="#">
-            <img class="vida-um" src="sprites/canhao.png" alt="#">
+        <div class="ponto-nave">+ 200</div>
+        <div class="hud">
+            <div class="pontuacao-ganha"></div>
+            <div class="pontuacao">SCORE: 00000</div>
+            <div class="vidas-texto">LIFES:</div>
+            <div class="vidas">
+                <img class="vida-tres" src="sprites/canhao.png" alt="#">
+                <img class="vida-dois" src="sprites/canhao.png" alt="#">
+                <img class="vida-um" src="sprites/canhao.png" alt="#">
+            </div>
         </div>
     </div>
     <canvas id="tela" width="400" height="600"></canvas> <!-- dimensões do espaço jogável-->
@@ -26,6 +32,10 @@
     <p class="mouseY">mouseY = 0</p>
     <p class="naveApareceu">Nave apareceu = não, numero sorteado = </p>
 </div>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Odibee+Sans&display=swap" rel="stylesheet">
 
 <style>
     #stage {
@@ -56,11 +66,74 @@
         position: absolute;
     }
 
+    .hud {
+        width: 400px;
+        height: 30px;
+        position: absolute;
+        bottom: 0px;
+        background: #782a1d;
+        border: 2px solid #1c0d08;
+        z-index: 4;
+        box-sizing: border-box;
+        opacity: 0.7;
+    }
+
+    .pontuacao-ganha {
+        color: white;
+        font-family: 'Odibee Sans', cursive;
+        font-weight: bold;
+        position: absolute;
+        bottom: 30px;
+        right: 10px;
+        font-size: 18px;
+    }
+
+    .pontuacao {
+        color: white;
+        font-family: 'Odibee Sans', cursive;
+        font-weight: bold;
+        position: absolute;
+        right: 10px;
+        bottom: 2px;
+        font-size: 18px;
+    }
+
+    .ponto-nave {
+        color: white;
+        font-family: 'Odibee Sans', cursive;
+        font-weight: bold;
+        position: absolute;
+        font-size: 20px;
+        z-index: 5;
+        display: none;
+    }
+
+    .vidas-texto {
+        color: white;
+        font-family: 'Odibee Sans', cursive;
+        font-weight: bold;
+        position: absolute;
+        left: 10px;
+        bottom: 2px;
+        font-size: 18px;
+    }
+
     .vidas {
         position: absolute;
-        z-index: 3;
-        bottom: 0px;
-        left: 10px;
+        bottom: -3px;
+        left: 55px;
+    }
+
+    .ganhar-ponto {
+        animation: pontuacaoDesaparece 1s;
+    }
+
+    .perder-vida {
+        animation: desaparece 1s ease-in-out;
+    }
+
+    .sumir {
+        opacity: 0;
     }
 
     @keyframes desaparece {
@@ -82,12 +155,24 @@
         }
     }
 
-    .perder-vida {
-        animation: desaparece 1s ease-in-out;
-    }
-
-    .sumir {
-        opacity: 0;
+    @keyframes pontuacaoDesaparece {
+        0% {
+            opacity: 0;
+            transform: translateY(+30px);
+        }
+        25% {
+            opacity: 0.3;
+        }
+        50% {
+            opacity: 0.6;
+        }
+        75% {
+            opacity: 0.9;
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0px);
+        }
     }
 </style>
 
@@ -113,10 +198,13 @@ const t_naveY = document.querySelector('.naveY');
 const t_laserX = document.querySelector('.laserX');
 const t_laserY = document.querySelector('.laserY');
 const t_naveApareceu = document.querySelector('.naveApareceu');
-const elementosVidas = document.querySelector('.vidas');
+const e_vidas = document.querySelector('.vidas');
 const vidaUm = document.querySelector('.vida-um');
 const vidaDois = document.querySelector('.vida-dois');
 const vidaTres = document.querySelector('.vida-tres');
+const e_pontuacao = document.querySelector('.pontuacao');
+const e_pontuacaoGanha = document.querySelector('.pontuacao-ganha');
+const e_pontoNave = document.querySelector('.ponto-nave');
 
 var tela;
 var c;
@@ -149,11 +237,14 @@ var acertouNaveEspecial = false;
 var impactoLaserX;
 var laserMovendo;
 var missilMovendo;
-var intervalo = 17;
+var intervalo = 50; //17
 var posicao = 0;
 var intervaloAparecerNave;
 var intervaloMoverNave = 0;
 var vidas = 3;
+var pontuacao = 0;
+
+var apagaPontoGanhoIdTimeOut = 0;
 
 var alienLinhas = [10, 38, 66, 94, 122, 150, 178, 206, 234, 262, 290];
 var alienColunas = [55, 85, 115, 145, 175];
@@ -199,7 +290,7 @@ function defineChanceAparecerNave() {
     if(naveComecou) return;
 
     let chanceNaveAparecer = parseFloat(Math.random().toFixed(1));
-    if(chanceNaveAparecer <= 0.2) {
+    if(chanceNaveAparecer <= 0.9) {
         t_naveApareceu.textContent = `nave apareceu = sim, numero sorteado = ${chanceNaveAparecer}`
         defineComecoNave();
     } else {
@@ -357,6 +448,18 @@ function laserAcertouNave(){
         naveComecou = false;
         c.clearRect(impactoLaserX, laserY, 6, 19);
         laserY = 0;
+        const pontoNave = Math.floor((Math.random() * 50)) + 50;
+        pontuacao += pontoNave;
+        mostraPontoGanho(pontoNave);
+        e_pontuacao.textContent = `SCORE: ${pontuacao.toString().padStart(5, '0')}`
+        e_pontoNave.textContent = `+ ${pontoNave}`;
+        e_pontoNave.style.top = naveY + 10;
+        e_pontoNave.style.left = naveX + 10;
+        e_pontoNave.style.display = "block";
+        e_pontoNave.classList.add('ganhar-ponto');
+        setTimeout(() => {
+            e_pontoNave.style.display = 'none';
+        }, 1500);
     }
 }
 
@@ -365,19 +468,55 @@ function alienAtingido(){
         const aa = aliensRestantes[i];
         const posicaoRealY = alienY + aa.posY
         const posicaoRealX = alienX + aa.posX
+        
         if ((laserY >= posicaoRealY) 
                 && (laserY <= (posicaoRealY + 20)) 
                 && (impactoLaserX >= (posicaoRealX - 5)) 
                 && (impactoLaserX <= (posicaoRealX + 18))){
                     
+            if (!aa.foiAtingido) {   
+                if (i % 5 === 0 || i % 5 === 1) {
+                    pontuacao += 40;
+                    mostraPontoGanho(40);
+                }
+                if (i % 5 === 2 || i % 5 === 3) {
+                    pontuacao += 20;
+                    mostraPontoGanho(20);
+                }
+                if (i % 5 === 4) {
+                    pontuacao += 10;
+                    mostraPontoGanho(10);
+                }
+            }
+
+            e_pontuacao.textContent = `SCORE: ${pontuacao.toString().padStart(5, '0')}`
+
             if (!aa.foiAtingido){
                 c.clearRect((alienX + aliensRestantes[i].posX - 1), (alienY + aliensRestantes[i].posY - 1), 20, 25);
                 aliensRestantes[i].foiAtingido = true;
                 c.clearRect(impactoLaserX, laserY, 6, 19);
                 laserY = 0;
             }
+
         }
     }    
+}
+
+function mostraPontoGanho(pontosGanhos) {
+    if (apagaPontoGanhoIdTimeOut > 0) {
+        clearTimeout(apagaPontoGanhoIdTimeOut);
+        apagaPontoGanhoIdTimeOut = 0;
+        e_pontuacaoGanha.classList.remove('ganhar-ponto');
+    }
+
+    e_pontuacaoGanha.textContent = `+ ${pontosGanhos}`;
+    e_pontuacaoGanha.style.display = 'block';
+    e_pontuacaoGanha.classList.add('ganhar-ponto');
+    apagaPontoGanhoIdTimeOut = setTimeout(() => {
+        e_pontuacaoGanha.style.display = 'none';
+        e_pontuacaoGanha.classList.remove('ganhar-ponto');
+        apagaPontoGanhoIdTimeOut = 0;
+    }, 1000);
 }
 
 function missilAcertouCanhao(){
@@ -408,7 +547,7 @@ function fimDeJogo(){
     missilFoiDisparado = false;
     naveComecou = false;
     missilY = 650;
-    elementosVidas.style.display = 'none';
+    e_vidas.style.display = 'none';
 	
     c.fillStyle = "black";
 	c.fillRect(0, 0, C_LARGURA, C_ALTURA);
