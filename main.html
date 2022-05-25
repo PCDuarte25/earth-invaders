@@ -237,7 +237,7 @@ var acertouNaveEspecial = false;
 var impactoLaserX;
 var laserMovendo;
 var missilMovendo;
-var intervalo = 50; //17
+var intervalo = 17;
 var posicao = 0;
 var intervaloAparecerNave;
 var intervaloMoverNave = 0;
@@ -320,7 +320,7 @@ function defineChanceAparecerNave() {
     if(naveComecou) return;
 
     let chanceNaveAparecer = parseFloat(Math.random().toFixed(1));
-    if(chanceNaveAparecer <= 0.9) {
+    if(chanceNaveAparecer <= 0.2) {
         t_naveApareceu.textContent = `nave apareceu = sim, numero sorteado = ${chanceNaveAparecer}`
         defineComecoNave();
     } else {
