@@ -1,7 +1,8 @@
 var map = {};
 onkeydown = onkeyup = function(e){
-    map[e.keyCode] = e.type == 'keydown';
+    if (jogoAcabou) return;
 
+    map[e.keyCode] = e.type == 'keydown';
     if (map[TECLA_ESQUERDA]) {
         if (canhaoX >= 9){
             c.clearRect(canhaoX, 537, 31, 19);

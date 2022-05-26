@@ -51,7 +51,7 @@ function moverAliens(){
             }
             
             if ((aliensRestantes[i].posY + alienY + 23) >= CANHAO_Y_ORIGINAL){
-                fimDeJogo();
+                fimDeJogoDerrota();
             }
         }
     }
@@ -74,8 +74,9 @@ function alienAtingido(){
                 && (laserY <= (posicaoRealY + 20)) 
                 && (impactoLaserX >= (posicaoRealX - 5)) 
                 && (impactoLaserX <= (posicaoRealX + 18))){
-                    
-            if (!aa.foiAtingido) {   
+
+                              
+            if (!aa.foiAtingido) {  
                 if (i % 5 === 0 || i % 5 === 1) {
                     pontuacao += PONTUACAO_ALIEN_3;
                     mostraPontoGanho(PONTUACAO_ALIEN_3);
@@ -89,14 +90,15 @@ function alienAtingido(){
                     mostraPontoGanho(PONTUACAO_ALIEN);
                 }
             }
-
+            
             e_pontuacao.textContent = `SCORE: ${pontuacao.toString().padStart(5, '0')}`
-
+            
             if (!aa.foiAtingido){
                 c.clearRect((alienX + aliensRestantes[i].posX - 1), (alienY + aliensRestantes[i].posY - 1), 20, 25);
                 aliensRestantes[i].foiAtingido = true;
                 c.clearRect(impactoLaserX, laserY, 6, 19);
                 laserY = 0;
+                checaSeJogadorGanhou() 
             }
 
         }
@@ -110,7 +112,7 @@ function missilAcertouCanhao(){
             && (missilX <= canhaoX + 25)){
         vidas--;
         if(vidas === 0) {
-            fimDeJogo();
+            fimDeJogoDerrota();
         }
         return true;
     }

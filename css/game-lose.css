@@ -1,0 +1,98 @@
+body {
+    font-family: 'a Autobus Omnibus', sans-serif;
+    color: white;
+}
+
+.background-lose-game {
+    display: none;
+    position: relative;
+    margin: 0px;
+    height: 600px;
+    width: 400px;
+    z-index: 10;
+}
+
+.you-lose-header {
+    position: absolute;
+    top: -20px;
+    left: 95px;
+    text-align: center;
+}
+
+.you-lose-header p:nth-child(1) {
+    font-size: 36px;
+    text-transform: uppercase;
+    text-shadow: -4px 4px 7px black;
+    margin-bottom: 20px;
+}
+
+.you-lose-header p:nth-child(2) {
+    margin-top: 0px;
+    font-size: 24px;
+    text-transform: uppercase;
+    text-shadow: -4px 4px 7px black;
+    margin-bottom: 10px;
+}
+
+.you-lose-header p:nth-child(3) {
+    margin-top: 0px;
+    font-size: 30px;
+    text-shadow: rgba(236, 12, 12, 0.9) 0px 0px 9px;
+}
+
+.you-lose-score {
+    position: absolute;
+    top: 235px;
+    left: 95px;
+    text-align: center;
+}
+
+.you-lose-score p:nth-child(1) {
+    font-size: 30px;
+    text-transform: uppercase;
+    text-shadow: -4px 4px 7px black;
+    margin-bottom: 10px;
+}
+
+.score-p-lose {
+    margin-top: 0px;
+    font-size: 30px;
+    text-shadow: rgba(236, 12, 12, 0.9) 0px 0px 9px;
+    margin-bottom: 0px;
+}
+
+.bonus {
+    margin-top: 5px;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+}
+
+.bonus img {
+    width: 30px;
+    height: 30px;
+}
+
+.bonus-p {
+    margin-top: 10px;
+}
+
+.you-lose-footer{
+    position: absolute;
+    top: 480px;
+    left: 145px;
+    text-align: center;
+}
+
+.you-lose-footer p {
+    font-size: 18px;
+    text-transform: uppercase;
+    text-shadow: -4px 4px 7px black;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.you-lose-footer p:hover {
+    transform: scale(1.3);
+    text-shadow: rgba(236, 12, 12, 0.9) 0px 0px 5px;
+}
