@@ -48,6 +48,15 @@ canvas {
     font-size: 18px;
 }
 
+.ponto-nave {
+    color: white;
+    font-family: 'Odibee Sans', cursive;
+    font-weight: bold;
+    position: absolute;
+    font-size: 20px;
+    z-index: 5;
+    display: none;
+}
 .pontuacao {
     color: white;
     font-family: 'Odibee Sans', cursive;
@@ -58,15 +67,6 @@ canvas {
     font-size: 18px;
 }
 
-.ponto-nave {
-    color: white;
-    font-family: 'Odibee Sans', cursive;
-    font-weight: bold;
-    position: absolute;
-    font-size: 20px;
-    z-index: 5;
-    display: none;
-}
 
 .vidas-texto {
     color: white;
