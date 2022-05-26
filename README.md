@@ -36,7 +36,7 @@ Um projeto para o meu trabalho da mateira de raciocínio lógico, e é sobre uma
     - Terceira e quarta filas: 20 pontos
     - Quinta fila: 40 pontos
     - Naves vermelhas: pontos aleatórios
-- [ ] O jogo termina quando:
+- [x] O jogo termina quando:
     - Todos os alienígenas forem destruídos (jogador vence o jogo)
     - Acabarem as vidas (jogador perde o jogo)
 

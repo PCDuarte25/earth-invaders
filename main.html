@@ -9,8 +9,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Odibee+Sans&display=swap" rel="stylesheet">
+    <link href="http://fonts.cdnfonts.com/css/a-autobus-omnibus" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="css/game.css" />
+    <link rel="stylesheet" type="text/css" href="css/game.css"/>
+    <link rel="stylesheet" type="text/css" href="css/game-win.css"/>
+    <link rel="stylesheet" type="text/css" href="css/game-lose.css"/>
     <script src="js/telas.js" defer></script>
     <script src="js/aliens.js" defer></script>
     <script src="js/movimentacao.js" defer></script>
@@ -20,23 +23,69 @@
     
 </head>
 <body>
-    <div id="stage">
-        <div class="game-container">
-            <div class="ponto-nave"></div>
-            <div class="hud">
-                <div class="pontuacao-ganha"></div>
-                <div class="pontuacao">SCORE: 00000</div>
-                <div class="vidas-texto">LIFES:</div>
-                <div class="vidas">
-                    <img class="vida-tres" src="sprites/canhao.png" alt="#">
-                    <img class="vida-dois" src="sprites/canhao.png" alt="#">
-                    <img class="vida-um" src="sprites/canhao.png" alt="#">
-                </div>
+    <div class="game-container">
+        <div class="ponto-nave"></div>
+        <div class="hud">
+            <div class="pontuacao-ganha"></div>
+            <div class="pontuacao">SCORE: 00000</div>
+            <div class="vidas-texto">LIFES:</div>
+            <div class="vidas">
+                <img class="vida-tres" src="sprites/canhao.png" alt="#">
+                <img class="vida-dois" src="sprites/canhao.png" alt="#">
+                <img class="vida-um" src="sprites/canhao.png" alt="#">
             </div>
         </div>
-        <canvas id="tela" width="400" height="600"></canvas> <!-- dimensões do espaço jogável-->
-        <canvas id="background" width="400" height="600"></canvas> <!-- dimensões do background estático -->
-    </div> 
+    </div>
+    <canvas id="tela" width="400" height="600"></canvas> <!-- dimensões do espaço jogável-->
+    <canvas id="background" width="400" height="600"></canvas> <!-- dimensões do background estático -->
+
+    <div class="background-win-game">
+        <img src="sprites/background-game-end.png" alt="#">
+    
+        <div class="you-win">
+            <div class="you-win-header">
+                <p>you win !</p>
+                <p>mars was</p>
+                <p>saved</p>
+            </div>
+
+            <div class="you-win-score">
+                <p>final score</p>
+                <p class="score-p-win"></p>
+                <div class="bonus">
+                    <img src="sprites/canhao.png"> 
+                    <div class="bonus-p"></div>
+                </div>
+            </div>
+
+            <div class="you-win-footer">
+                <p class="play-again">play again</p>
+                <p>ranking</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="background-lose-game">
+        <img src="sprites/background-game-end.png" alt="#">
+    
+        <div class="you-lose">
+            <div class="you-lose-header">
+                <p>you lose !</p>
+                <p>mars was</p>
+                <p>annihilated</p>
+            </div>
+
+            <div class="you-lose-score">
+                <p>final score</p>
+                <p class="score-p-lose"></p>
+            </div>
+
+            <div class="you-lose-footer">
+                <p class="play-again">play again</p>
+                <p>ranking</p>
+            </div>
+        </div>
+    </div>
     
     <div class="tabela">
         <!-- <p class="canhaoX">canhaoX = 0</p>

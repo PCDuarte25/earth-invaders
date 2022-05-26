@@ -20,6 +20,7 @@ const VELOCIDADE_NAVE = 3; // Default = 3
 const CHANCE_APARECER_NAVE = 0.2; // Default = 0.2
 
 const CANHAO_Y_ORIGINAL = 529; // Default = 529
+const CANHAO_X_ORIGINAL = 180; // Default = 180;
 const VELOCIDADE_CANHAO = 8; // Default = 8
 
 const LASER_Y_ORIGINAL = 520; // Default = 520
@@ -30,6 +31,7 @@ const PONTUACAO_ALIEN_3 = 40; // Default = 40
 const PONTUACAO_ALIEN_2 = 20; // Default = 20
 const PONTUACAO_ALIEN = 10; // Default = 10
 
+const VIDAS_INICIAL = 3;
 // debugger na tela
 
 // const t_canhaoX = document.querySelector('.canhaoX');
@@ -53,6 +55,13 @@ const vidaTres = document.querySelector('.vida-tres');
 const e_pontuacao = document.querySelector('.pontuacao');
 const e_pontuacaoGanha = document.querySelector('.pontuacao-ganha');
 const e_pontoNave = document.querySelector('.ponto-nave');
+const e_backgroundWinGame = document.querySelector('.background-win-game');
+const e_finalScoreWin = document.querySelector('.score-p-win');
+const e_playAgainWin = document.querySelector('.you-win-footer .play-again');
+const e_backgroundLoseGame = document.querySelector('.background-lose-game');
+const e_finalScoreLose = document.querySelector('.score-p-lose');
+const e_playAgainLose = document.querySelector('.you-lose-footer .play-again');
+const e_bonus = document.querySelector('.bonus-p');
 
 var tela;
 var c;
@@ -64,7 +73,7 @@ var alien;
 var background; 
 var backgroundImage;
 
-var canhaoX = 180;
+var canhaoX = CANHAO_X_ORIGINAL;
 var canhaoY = CANHAO_Y_ORIGINAL;
 var laserX = 193;
 var laserY = LASER_Y_ORIGINAL
@@ -85,7 +94,7 @@ var jogoAcabou = false;
 var acertouNaveEspecial = false;
 
 
-var vidas = 3;
+var vidas = VIDAS_INICIAL;
 var intervaloMoverNave = 0;
 var apagaPontoGanhoIdTimeOut = 0;
 var posicao = 0;
@@ -96,4 +105,5 @@ var missilMovendo;
 var impactoLaserX;
 
 var aliensRestantes = [];
-iniciar(); 
+
+preIniciar(); 
