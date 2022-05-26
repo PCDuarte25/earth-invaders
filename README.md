@@ -2,6 +2,12 @@
 
 Um projeto para o meu trabalho da mateira de raciocínio lógico, e é sobre uma réplica do space invaders, mas eu decidi fazer "Earth Invaders"
 
+## Sobre
+- Space Invaders
+- Autor: Ayo Oyewole
+- Adaptado por: Gilson Pereira
+- Código fonte original: http://www.ayodeji.ca/space-invaders/
+
 ## Como o jogo funciona
 
 - canhão que atira laser para destruir inimigos.

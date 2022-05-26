@@ -1,0 +1,136 @@
+#stage {
+    width: 480px;
+    height: 320px;
+    position: relative;
+}
+
+canvas {
+    position: absolute;
+}
+
+#background {
+    z-index: 1;
+}
+
+#tela {
+    z-index: 2;
+}
+
+.tabela {
+    position: absolute;
+}
+
+.game-container {
+    width: 400px;
+    height: 600px;
+    position: absolute;
+}
+
+.hud {
+    width: 400px;
+    height: 30px;
+    position: absolute;
+    bottom: 0px;
+    background: #782a1d;
+    border: 2px solid #1c0d08;
+    z-index: 4;
+    box-sizing: border-box;
+    opacity: 0.7;
+}
+
+.pontuacao-ganha {
+    color: white;
+    font-family: 'Odibee Sans', cursive;
+    font-weight: bold;
+    position: absolute;
+    bottom: 30px;
+    right: 10px;
+    font-size: 18px;
+}
+
+.pontuacao {
+    color: white;
+    font-family: 'Odibee Sans', cursive;
+    font-weight: bold;
+    position: absolute;
+    right: 10px;
+    bottom: 2px;
+    font-size: 18px;
+}
+
+.ponto-nave {
+    color: white;
+    font-family: 'Odibee Sans', cursive;
+    font-weight: bold;
+    position: absolute;
+    font-size: 20px;
+    z-index: 5;
+    display: none;
+}
+
+.vidas-texto {
+    color: white;
+    font-family: 'Odibee Sans', cursive;
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+    bottom: 2px;
+    font-size: 18px;
+}
+
+.vidas {
+    position: absolute;
+    bottom: -3px;
+    left: 55px;
+}
+
+.ganhar-ponto {
+    animation: pontuacaoDesaparece 1s;
+}
+
+.perder-vida {
+    animation: desaparece 1s ease-in-out;
+}
+
+.sumir {
+    opacity: 0;
+}
+
+@keyframes desaparece {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(0) scale(0.5);
+    }
+}
+
+@keyframes pontuacaoDesaparece {
+    0% {
+        opacity: 0;
+        transform: translateY(+30px);
+    }
+    25% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    75% {
+        opacity: 0.9;
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
