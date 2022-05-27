@@ -96,6 +96,7 @@ function alienAtingido(){
             if (!aa.foiAtingido){
                 c.clearRect((alienX + aliensRestantes[i].posX - 1), (alienY + aliensRestantes[i].posY - 1), 20, 25);
                 aliensRestantes[i].foiAtingido = true;
+                alienHit.play();
                 c.clearRect(impactoLaserX, laserY, 6, 19);
                 laserY = 0;
                 checaSeJogadorGanhou() 
@@ -110,6 +111,7 @@ function missilAcertouCanhao(){
             && (missilY - 27 <= canhaoY + 30) 
             && (missilX >= canhaoX - 5)
             && (missilX <= canhaoX + 25)){
+        canonHit.play();
         vidas--;
         if(vidas === 0) {
             fimDeJogoDerrota();

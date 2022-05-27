@@ -29,6 +29,7 @@ function moverNave() {
     if(!naveComecou) return;
 
     laserAcertouNave()
+    spaceShipMoving.play();
 
     if (naveComecouEsquerda) {
         naveX += VELOCIDADE_NAVE;
@@ -36,6 +37,8 @@ function moverNave() {
 
     if(naveX > 400 && naveComecouEsquerda) {
         naveComecou = false;
+        spaceShipMoving.loop = false;
+        spaceShipMoving.pause();
     }
 
     if(naveComecouDireita) {
@@ -44,6 +47,8 @@ function moverNave() {
 
     if(naveX < -52 && naveComecouDireita) {
         naveComecou = false;
+        spaceShipMoving.loop = false;
+        spaceShipMoving.pause();
     }
 
     // Debugger tela incial
@@ -61,6 +66,9 @@ function moverNave() {
 function laserAcertouNave(){
     if ((laserY <= naveY + 30 && laserY !== 0) && (laserY >= naveY) && (impactoLaserX >= naveX) && (impactoLaserX + 6 <= naveX + 55)) {
         acertouNaveEspecial = true;
+        spaceShipHit.play();
+        spaceShipMoving.loop = false;
+        spaceShipMoving.pause();
         c.clearRect(naveX, naveY, 400, 37);
         naveComecou = false;
         c.clearRect(impactoLaserX, laserY, 6, 19);

@@ -24,6 +24,8 @@ function iniciar() {
     posicionarAlien();
 
     carregarImagens();
+    carregarSons();
+    
 
     intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
     intervaloAlienAtingido = setInterval("alienAtingido()", INTERVALO_ALIEN_ATINGIDO);
@@ -65,6 +67,35 @@ function carregarImagens() {
     naveEspecial.src = "sprites/special-ship.png"
 }
 
+function carregarSons() {
+    laserShoot = new Audio("sounds/laser-shoot.wav");
+    laserShoot.volume = 0.1;
+
+    alienHit = new Audio("sounds/alien-hit.wav");
+    alienHit.volume = 0.1;
+
+    backgroundMusic = new Audio("sounds/background-music.mp3");
+    backgroundMusic.loop = true;
+    backgroundMusic.volume = 0.1;
+
+    spaceShipMoving = new Audio('sounds/space-ship-moving.wav');
+    spaceShipMoving.loop = true;
+    spaceShipMoving.volume = 0.3;
+
+    spaceShipHit = new Audio('sounds/space-ship-hit.wav');
+    spaceShipHit.volume = 0.1;
+
+    gameOver = new Audio('sounds/game-over.mp3');
+    gameOver.volume = 0.1;
+
+    gameWin = new Audio("sounds/game-win.wav");
+    gameWin.volume = 0.1;
+
+    canonHit = new Audio("sounds/canon-explosion.wav");
+    canonHit.volume = 0.1;
+}
+
+
 function checaSeJogadorGanhou() {
     for (let i = 0; i < aliensRestantes.length; i++) {
         if (!aliensRestantes[i].foiAtingido) {
@@ -76,6 +107,9 @@ function checaSeJogadorGanhou() {
 
 function fimDeJogoVitoria() {
     jogoAcabou = true;
+    backgroundMusic.loop = false;
+    backgroundMusic.pause();
+    gameWin.play();
     aliensRestantes = [];
     map = {};
     e_backgroundWinGame.style.display = "block";
@@ -103,6 +137,9 @@ function fimDeJogoVitoria() {
 
 function fimDeJogoDerrota() {
     jogoAcabou = true;
+    backgroundMusic.loop = false;
+    backgroundMusic.pause();
+    gameOver.play();
     aliensRestantes = [];
     map = {};
     e_backgroundLoseGame.style.display = "block";

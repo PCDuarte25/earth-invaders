@@ -72,6 +72,14 @@ var laser;
 var alien;
 var background; 
 var backgroundImage;
+var laserMovendo;
+var alienHit;
+var canonHit;
+var backgroundMusic;
+var spaceShipMoving;
+var spaceShipHit;
+var gameOver;
+var gameWin;
 
 var canhaoX = CANHAO_X_ORIGINAL;
 var canhaoY = CANHAO_Y_ORIGINAL;

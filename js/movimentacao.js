@@ -23,6 +23,7 @@ onkeydown = onkeyup = function(e){
 
     if (map[TECLA_ACIMA]) {
         if (!inicioLaser) {
+            laserShoot.play();
             inicioLaser = true;
             c.drawImage(laser, laserX, laserY);
             impactoLaserX = laserX;
@@ -33,6 +34,7 @@ onkeydown = onkeyup = function(e){
 
 function dispararLaser(){
     if (inicioLaser && (laserY >= 0)){
+        backgroundMusic.play();
         laserY -= VELOCIDADE_LASER;
         c.clearRect(impactoLaserX, (laserY + VELOCIDADE_LASER), 6, 19);
 		
