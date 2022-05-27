@@ -54,3 +54,16 @@
     text-transform: uppercase;
     text-shadow: -4px 4px 7px black;
 }
+
+.game-footer a {
+    text-decoration: none;
+    color: rgb(255, 102, 0)
+}
+
+.game-footer a:hover {
+    border-bottom: 2px dotted rgb(255, 102, 0) ;
+}
+
+.game-footer a:visited {
+    color: rgb(255, 102, 0);
+}

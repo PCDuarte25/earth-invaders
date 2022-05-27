@@ -10,7 +10,20 @@ function preIniciar() {
     e_initialGameScreen.style.display = "none";
 
     e_playAgainLose.addEventListener('click', jogarDeNovo);
+    e_playAgainLose.addEventListener('mouseover', function(){
+        menuNavigate.play();
+    })
+    e_rankingLose.addEventListener('mouseover', function(){
+        menuNavigate.play();
+    })
+
     e_playAgainWin.addEventListener('click', jogarDeNovo);
+    e_playAgainWin.addEventListener('mouseover', function(){
+        menuNavigate.play();
+    })
+    e_rankingWin.addEventListener('mouseover', function(){
+        menuNavigate.play();
+    })
     
 
     // debugger na tela
@@ -137,7 +150,7 @@ function fimDeJogoVitoria() {
     clearInterval(intervaloMoverNave);
     clearInterval(laserMovendo);
     clearInterval(intervaloSomAlienSeMexendo);
-    
+
     c.clearRect(canhaoX, canhaoY, 35, 35);
     c.clearRect(naveX, naveY, 50, 37);
     c.clearRect(alienX, alienY, 400, 200);
@@ -190,6 +203,9 @@ function fimDeJogoDerrota() {
 function jogarDeNovo() {
     jogoRodando = true;
     jogoAcabou = false;
+    scoreCounter.pause();
+    gameWin.pause();
+    gameOver.pause();
     pontuacao = 0;
     iniciar()
     e_backgroundLoseGame.style.display = "none";
@@ -228,5 +244,4 @@ function contadorDePontos() {
 function somAlienMexendo() {
     alienMove.play();
 }
-
 

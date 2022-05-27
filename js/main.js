@@ -64,6 +64,9 @@ const e_playAgainLose = document.querySelector('.you-lose-footer .play-again');
 const e_bonus = document.querySelector('.bonus-p');
 const e_initialGameScreen = document.querySelector('.initial-game-screen');
 const e_playGame = document.querySelector('.play-game');
+const e_rankingMenu = document.querySelector('.game-menu .ranking');
+const e_rankingWin = document.querySelector('.you-win-footer .ranking');
+const e_rankingLose = document.querySelector('.you-lose-footer .ranking');
 
 var tela;
 var c;
@@ -120,9 +123,19 @@ var somador = 0;
 var intervaloContadorDePontos = 0;
 var intervaloSomAlienSeMexendo = 0;
 
+const menuNavigate = new Audio('sounds/menu-navigate2.mp3');
+menuNavigate.volume = 0.1;
+
 var aliensRestantes = [];
 
 e_playGame.addEventListener('click', comecaJogo);
+e_playGame.addEventListener('mouseover', function(){
+    menuNavigate.play();
+})
+
+e_rankingMenu.addEventListener('mouseover', function(){
+    menuNavigate.play();
+})
 
 function comecaJogo() {
     jogoComecou = true;
