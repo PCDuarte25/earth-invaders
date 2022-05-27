@@ -17,7 +17,7 @@ const VELOCIDADE_MISSIL = 10; // Default = 10
 const INTERVALO_CHANCE_APARECER_NAVE = 5000;  // Default = 5000
 const INTERVALO_MOVER_NAVE = 18; // Default = 18
 const VELOCIDADE_NAVE = 3; // Default = 3
-const CHANCE_APARECER_NAVE = 1; // Default = 0.2
+const CHANCE_APARECER_NAVE = 0.2; // Default = 0.2
 
 const CANHAO_Y_ORIGINAL = 529; // Default = 529
 const CANHAO_X_ORIGINAL = 180; // Default = 180;
@@ -62,6 +62,8 @@ const e_backgroundLoseGame = document.querySelector('.background-lose-game');
 const e_finalScoreLose = document.querySelector('.score-p-lose');
 const e_playAgainLose = document.querySelector('.you-lose-footer .play-again');
 const e_bonus = document.querySelector('.bonus-p');
+const e_initialGameScreen = document.querySelector('.initial-game-screen');
+const e_playGame = document.querySelector('.play-game');
 
 var tela;
 var c;
@@ -80,6 +82,7 @@ var spaceShipMoving;
 var spaceShipHit;
 var gameOver;
 var gameWin;
+var scoreCounter;
 
 var canhaoX = CANHAO_X_ORIGINAL;
 var canhaoY = CANHAO_Y_ORIGINAL;
@@ -99,6 +102,8 @@ var naveComecou = false
 var naveComecouEsquerda = false;
 var naveComecouDireita = false;
 var jogoAcabou = false;
+var jogoComecou = false;
+var jogoRodando = false;
 var acertouNaveEspecial = false;
 
 
@@ -107,11 +112,21 @@ var intervaloMoverNave = 0;
 var apagaPontoGanhoIdTimeOut = 0;
 var posicao = 0;
 var pontuacao = 0;
-var intervaloAparecerNave;
+var intervaloAparecerNave = 0;
 var laserMovendo;
 var missilMovendo;
 var impactoLaserX;
+var somador = 0;
+var intervaloContadorDePontos = 0;
+var intervaloSomAlienSeMexendo = 0;
 
 var aliensRestantes = [];
 
-preIniciar(); 
+e_playGame.addEventListener('click', comecaJogo);
+
+function comecaJogo() {
+    jogoComecou = true;
+    preIniciar();
+}
+
+

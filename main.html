@@ -10,10 +10,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Odibee+Sans&display=swap" rel="stylesheet">
     <link href="http://fonts.cdnfonts.com/css/a-autobus-omnibus" rel="stylesheet">
-
+    <link href="http://fonts.cdnfonts.com/css/press-start" rel="stylesheet">
+    
     <link rel="stylesheet" type="text/css" href="css/game.css"/>
     <link rel="stylesheet" type="text/css" href="css/game-win.css"/>
     <link rel="stylesheet" type="text/css" href="css/game-lose.css"/>
+    <link rel="stylesheet" type="text/css" href="css/screen.css"/>
+
     <script src="js/telas.js" defer></script>
     <script src="js/aliens.js" defer></script>
     <script src="js/movimentacao.js" defer></script>
@@ -23,6 +26,25 @@
     
 </head>
 <body>
+    <div class="initial-game-screen">
+        <img src="sprites/background-game-end.png" alt="#">
+    
+        <div class="initial-game-container">
+            <div class="game-logo">
+                <p>earth invaders</p>
+            </div>
+
+            <div class="game-menu">
+                <p class="play-game">play game</p>
+                <p>ranking</p>
+            </div>
+
+            <div class="game-footer">
+                <p>a game developed by pedro caio</p>
+            </div>
+        </div>
+    </div>
+
     <div class="game-container">
         <div class="ponto-nave"></div>
         <div class="hud">
@@ -38,6 +60,7 @@
     </div>
     <canvas id="tela" width="400" height="600"></canvas> <!-- dimensões do espaço jogável-->
     <canvas id="background" width="400" height="600"></canvas> <!-- dimensões do background estático -->
+
 
     <div class="background-win-game">
         <img src="sprites/background-game-end.png" alt="#">
@@ -86,7 +109,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="tabela">
         <!-- <p class="canhaoX">canhaoX = 0</p>
         <p class="canhaoY">canhaoY = 0</p>

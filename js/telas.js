@@ -7,6 +7,8 @@ function preIniciar() {
     bc = background.getContext("2d");
     c = tela.getContext("2d");
 
+    e_initialGameScreen.style.display = "none";
+
     e_playAgainLose.addEventListener('click', jogarDeNovo);
     e_playAgainWin.addEventListener('click', jogarDeNovo);
     
@@ -21,14 +23,16 @@ function preIniciar() {
 }
 
 function iniciar() {
+    jogoRodando = true;
     posicionarAlien();
 
     carregarImagens();
     carregarSons();
+    backgroundMusic.play();
     
-
     intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
     intervaloAlienAtingido = setInterval("alienAtingido()", INTERVALO_ALIEN_ATINGIDO);
+    intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
     
     intervaloAparecerNave = setInterval(defineChanceAparecerNave, INTERVALO_CHANCE_APARECER_NAVE);
     intervaloMoverNave = setInterval(moverNave, INTERVALO_MOVER_NAVE);
@@ -69,30 +73,36 @@ function carregarImagens() {
 
 function carregarSons() {
     laserShoot = new Audio("sounds/laser-shoot.wav");
-    laserShoot.volume = 0.1;
+    laserShoot.volume = 0.1; // default 0.1
 
     alienHit = new Audio("sounds/alien-hit.wav");
-    alienHit.volume = 0.1;
+    alienHit.volume = 0.1; // default 0.1
 
     backgroundMusic = new Audio("sounds/background-music.mp3");
     backgroundMusic.loop = true;
-    backgroundMusic.volume = 0.1;
+    backgroundMusic.volume = 0.07; // default 0.07
 
     spaceShipMoving = new Audio('sounds/space-ship-moving.wav');
     spaceShipMoving.loop = true;
-    spaceShipMoving.volume = 0.3;
+    spaceShipMoving.volume = 0.3; // default 0.3
 
     spaceShipHit = new Audio('sounds/space-ship-hit.wav');
-    spaceShipHit.volume = 0.1;
+    spaceShipHit.volume = 0.1; // default 0.1
 
     gameOver = new Audio('sounds/game-over.mp3');
-    gameOver.volume = 0.1;
+    gameOver.volume = 0.1; // default 0.1
 
     gameWin = new Audio("sounds/game-win.wav");
-    gameWin.volume = 0.1;
+    gameWin.volume = 0.1; // default 0.1
 
     canonHit = new Audio("sounds/canon-explosion.wav");
-    canonHit.volume = 0.1;
+    canonHit.volume = 0.1; // default 0.1
+
+    scoreCounter = new Audio("sounds/score-calculation.mp3");
+    scoreCounter.volume = 0.5; // default 0.5
+
+    alienMove = new Audio("sounds/alien-move.wav");
+    alienMove.volume = 0.05; // default 0.05
 }
 
 
@@ -106,21 +116,28 @@ function checaSeJogadorGanhou() {
 }
 
 function fimDeJogoVitoria() {
+    jogoRodando = false;
     jogoAcabou = true;
     backgroundMusic.loop = false;
     backgroundMusic.pause();
+    spaceShipMoving.loop = false;
+    spaceShipMoving.pause()
     gameWin.play();
+    scoreCounter.play();
     aliensRestantes = [];
     map = {};
     e_backgroundWinGame.style.display = "block";
-    e_finalScoreWin.textContent = `${(pontuacao * vidas).toString().padStart(5, '0')}`;
     e_bonus.textContent = `${vidas}X`;
+    
+    intervaloContadorDePontos = setInterval(contadorDePontos, 10);
 
     clearInterval(intervaloAlienAtingido);
     clearInterval(intervaloMoverAliens);
     clearInterval(intervaloAparecerNave);
     clearInterval(intervaloMoverNave);
     clearInterval(laserMovendo);
+    clearInterval(intervaloSomAlienSeMexendo);
+    
     c.clearRect(canhaoX, canhaoY, 35, 35);
     c.clearRect(naveX, naveY, 50, 37);
     c.clearRect(alienX, alienY, 400, 200);
@@ -136,9 +153,12 @@ function fimDeJogoVitoria() {
 }
 
 function fimDeJogoDerrota() {
+    jogoRodando = false;
     jogoAcabou = true;
     backgroundMusic.loop = false;
     backgroundMusic.pause();
+    spaceShipMoving.loop = false;
+    spaceShipMoving.pause()
     gameOver.play();
     aliensRestantes = [];
     map = {};
@@ -150,6 +170,8 @@ function fimDeJogoDerrota() {
     clearInterval(intervaloAparecerNave);
     clearInterval(intervaloMoverNave);
     clearInterval(laserMovendo);
+    clearInterval(intervaloSomAlienSeMexendo);
+
     c.clearRect(canhaoX, canhaoY, 35, 35);
     c.clearRect(naveX, naveY, 50, 37);
     c.clearRect(alienX, alienY, 400, 200);
@@ -166,6 +188,7 @@ function fimDeJogoDerrota() {
 }
 
 function jogarDeNovo() {
+    jogoRodando = true;
     jogoAcabou = false;
     pontuacao = 0;
     iniciar()
@@ -181,6 +204,8 @@ function jogarDeNovo() {
     c.drawImage(canhao, canhaoX, canhaoY);
 
     e_pontuacao.textContent = `SCORE: ${pontuacao.toString().padStart(5, '0')}`;
+    e_finalScoreWin.textContent = `SCORE: ${pontuacao.toString().padStart(5, '0')}`;
+    somador = 0;
 
     vidas = VIDAS_INICIAL;
     e_vidas.style.display = 'block';
@@ -188,3 +213,20 @@ function jogarDeNovo() {
     vidaDois.classList.remove("perder-vida", "sumir");
     vidaTres.classList.remove("sumir");
 }
+
+function contadorDePontos() {
+    somador += 10;
+    e_finalScoreWin.textContent = `${(somador).toString().padStart(5, '0')}`;
+
+    if(somador >= pontuacao * vidas) {
+        clearInterval(intervaloContadorDePontos);
+        scoreCounter.pause();
+        e_finalScoreWin.textContent = (pontuacao * vidas).toString().padStart(5, '0');
+    }
+}
+
+function somAlienMexendo() {
+    alienMove.play();
+}
+
+

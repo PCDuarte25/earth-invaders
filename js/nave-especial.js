@@ -3,6 +3,7 @@ function defineChanceAparecerNave() {
 
     let chanceNaveAparecer = parseFloat(Math.random().toFixed(1));
     if(chanceNaveAparecer <= CHANCE_APARECER_NAVE) {
+        spaceShipMoving.play();
         t_naveApareceu.textContent = `nave apareceu = sim, numero sorteado = ${chanceNaveAparecer}`
         defineComecoNave();
     } else {
@@ -29,7 +30,6 @@ function moverNave() {
     if(!naveComecou) return;
 
     laserAcertouNave()
-    spaceShipMoving.play();
 
     if (naveComecouEsquerda) {
         naveX += VELOCIDADE_NAVE;

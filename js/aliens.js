@@ -19,7 +19,7 @@ function moverAliens(){
     } else if ((posicao > 65) && (posicao <= 80)){
         alienX += VELOCIDADE_ALIEN;
         alienY += VELOCIDADE_ALIEN;
-        posicao += 1;            
+        posicao += 1;           
     } else if ((posicao > 80) && (posicao <= 147)){
         alienX -= VELOCIDADE_ALIEN;
         posicao += 1;
