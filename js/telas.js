@@ -24,11 +24,8 @@ function iniciar() {
     posicionarAlien();
 
     carregarImagens();
-<<<<<<< HEAD
     carregarSons();
     
-=======
->>>>>>> 47b5851e1377217cd2af928768ac0472e247573e
 
     intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
     intervaloAlienAtingido = setInterval("alienAtingido()", INTERVALO_ALIEN_ATINGIDO);
@@ -70,7 +67,6 @@ function carregarImagens() {
     naveEspecial.src = "sprites/special-ship.png"
 }
 
-<<<<<<< HEAD
 function carregarSons() {
     laserShoot = new Audio("sounds/laser-shoot.wav");
     laserShoot.volume = 0.1;
@@ -100,8 +96,6 @@ function carregarSons() {
 }
 
 
-=======
->>>>>>> 47b5851e1377217cd2af928768ac0472e247573e
 function checaSeJogadorGanhou() {
     for (let i = 0; i < aliensRestantes.length; i++) {
         if (!aliensRestantes[i].foiAtingido) {
@@ -113,12 +107,9 @@ function checaSeJogadorGanhou() {
 
 function fimDeJogoVitoria() {
     jogoAcabou = true;
-<<<<<<< HEAD
     backgroundMusic.loop = false;
     backgroundMusic.pause();
     gameWin.play();
-=======
->>>>>>> 47b5851e1377217cd2af928768ac0472e247573e
     aliensRestantes = [];
     map = {};
     e_backgroundWinGame.style.display = "block";
@@ -146,12 +137,9 @@ function fimDeJogoVitoria() {
 
 function fimDeJogoDerrota() {
     jogoAcabou = true;
-<<<<<<< HEAD
     backgroundMusic.loop = false;
     backgroundMusic.pause();
     gameOver.play();
-=======
->>>>>>> 47b5851e1377217cd2af928768ac0472e247573e
     aliensRestantes = [];
     map = {};
     e_backgroundLoseGame.style.display = "block";
