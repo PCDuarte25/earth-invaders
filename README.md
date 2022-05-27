@@ -42,7 +42,7 @@ Um projeto para o meu trabalho da mateira de raciocínio lógico, e é sobre uma
 
 ### Recursos avançados
 
-- [ ] Efeitos sonoros para:
+- [x] Efeitos sonoros para:
     - Movimento dos alienígenas
     - Tiro de laser do canhão
     - Explosão do alienígena ao ser atingido pelo laser do canhão
