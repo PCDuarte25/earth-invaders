@@ -43,6 +43,8 @@ function iniciar() {
     carregarSons();
     backgroundMusic.play();
     
+    INTERVALO_MOVER_ALIENS = 40;
+    aliensAbatido = 0;
     intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
     intervaloAlienAtingido = setInterval("alienAtingido()", INTERVALO_ALIEN_ATINGIDO);
     intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
@@ -86,18 +88,18 @@ function carregarImagens() {
 
 function carregarSons() {
     laserShoot = new Audio("sounds/laser-shoot.wav");
-    laserShoot.volume = 0.1; // default 0.1
+    laserShoot.volume = 0.07; // default 0.1
 
     alienHit = new Audio("sounds/alien-hit.wav");
-    alienHit.volume = 0.1; // default 0.1
+    alienHit.volume = 0.07; // default 0.1
 
     backgroundMusic = new Audio("sounds/background-music.mp3");
     backgroundMusic.loop = true;
-    backgroundMusic.volume = 0.07; // default 0.07
+    backgroundMusic.volume = 0.04; // default 0.07
 
     spaceShipMoving = new Audio('sounds/space-ship-moving.wav');
     spaceShipMoving.loop = true;
-    spaceShipMoving.volume = 0.3; // default 0.3
+    spaceShipMoving.volume = 0.2; // default 0.3
 
     spaceShipHit = new Audio('sounds/space-ship-hit.wav');
     spaceShipHit.volume = 0.1; // default 0.1
@@ -115,7 +117,7 @@ function carregarSons() {
     scoreCounter.volume = 0.5; // default 0.5
 
     alienMove = new Audio("sounds/alien-move.wav");
-    alienMove.volume = 0.05; // default 0.05
+    alienMove.volume = 0.1; // default 0.05
 }
 
 

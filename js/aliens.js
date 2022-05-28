@@ -96,12 +96,16 @@ function alienAtingido(){
             if (!aa.foiAtingido){
                 c.clearRect((alienX + aliensRestantes[i].posX - 1), (alienY + aliensRestantes[i].posY - 1), 20, 25);
                 aliensRestantes[i].foiAtingido = true;
+                aliensAbatido++;
+                console.log(`aliens abatidos: ${aliensAbatido}`)
                 alienHit.play();
                 c.clearRect(impactoLaserX, laserY, 6, 19);
                 laserY = 0;
                 checaSeJogadorGanhou() 
             }
-
+            
+            aceleraAliens(aliensAbatido);
+            
         }
     }    
 }
@@ -174,4 +178,38 @@ function disparaMissil(alienAtual, posX){
         missilFoiDisparado = false;
         missilY = alienY + alienAtual.posY + 33;
     }
+}
+
+function aceleraAliens(aliensAbatido) {
+    if (aliensAbatido === 10) {
+        INTERVALO_MOVER_ALIENS = 30;
+        clearInterval(intervaloMoverAliens);
+        clearInterval(intervaloSomAlienSeMexendo);
+        intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
+        intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
+    } else if (aliensAbatido === 20) {
+        INTERVALO_MOVER_ALIENS = 20;
+        clearInterval(intervaloMoverAliens);
+        clearInterval(intervaloSomAlienSeMexendo);
+        intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
+        intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
+    } else if (aliensAbatido === 30) {
+        INTERVALO_MOVER_ALIENS = 15;
+        clearInterval(intervaloMoverAliens);
+        clearInterval(intervaloSomAlienSeMexendo);
+        intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
+        intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
+    } else if (aliensAbatido === 40) {
+        INTERVALO_MOVER_ALIENS = 12;
+        clearInterval(intervaloMoverAliens);
+        clearInterval(intervaloSomAlienSeMexendo);
+        intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
+        intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
+    } else if (aliensAbatido === 50) {
+        INTERVALO_MOVER_ALIENS = 10;
+        clearInterval(intervaloMoverAliens);
+        clearInterval(intervaloSomAlienSeMexendo);
+        intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
+        intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
+    } 
 }

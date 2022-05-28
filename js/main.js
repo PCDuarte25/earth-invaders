@@ -5,7 +5,7 @@ const TECLA_ESQUERDA = 37; // Default = 37
 const TECLA_DIREITA = 39; // Default = 39
 const TECLA_ACIMA = 38; // Default = 38
 
-const INTERVALO_MOVER_ALIENS = 17; // Default = 17
+var INTERVALO_MOVER_ALIENS = 40; // Default = 17
 const INTERVALO_ALIEN_ATINGIDO = 6; // Default = 6
 const VELOCIDADE_ALIEN = 1; // Default = 1
 const ALIEN_COLUNAS = [55, 85, 115, 145, 175]; // Default = [55, 85, 115, 145, 175]
@@ -24,7 +24,7 @@ const CANHAO_X_ORIGINAL = 180; // Default = 180;
 const VELOCIDADE_CANHAO = 8; // Default = 8
 
 const LASER_Y_ORIGINAL = 520; // Default = 520
-const INTERVALO_LASER_MOVENDO = 10; // Default = 10
+const INTERVALO_LASER_MOVENDO = 15; // Default = 10
 const VELOCIDADE_LASER = 20; // Default = 20
 
 const PONTUACAO_ALIEN_3 = 40; // Default = 40
@@ -98,6 +98,7 @@ var alienY = 0;
 var naveY = 15;
 var naveX = 0;
 var metadeDoAlienX = 5;
+var aliensAbatido = 0;
 
 var inicioLaser = false;
 var missilFoiDisparado = false;
