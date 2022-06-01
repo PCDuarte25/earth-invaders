@@ -8,6 +8,7 @@ function preIniciar() {
     c = tela.getContext("2d");
 
     e_initialGameScreen.style.display = "none";
+    e_hud.style.display = 'block';
 
     e_playAgainLose.addEventListener('click', jogarDeNovo);
     e_playAgainLose.addEventListener('mouseover', function(){
@@ -146,6 +147,13 @@ function fimDeJogoVitoria() {
     
     intervaloContadorDePontos = setInterval(contadorDePontos, 10);
 
+    if (pontuacao > jogadorAtual.score) {
+        jogadorAtual.score = pontuacao * vidas;
+        ordenaRanking(jogadores);
+        const peopleJson = JSON.stringify(jogadores);
+        localStorage.setItem('jogadores', peopleJson);
+    }
+
     clearInterval(intervaloAlienAtingido);
     clearInterval(intervaloMoverAliens);
     clearInterval(intervaloAparecerNave);
@@ -156,7 +164,7 @@ function fimDeJogoVitoria() {
     c.clearRect(canhaoX, canhaoY, 35, 35);
     c.clearRect(naveX, naveY, 50, 37);
     c.clearRect(alienX, alienY, 400, 200);
-    c.clearRect(laserX, laserY, 6, 19);
+    c.clearRect(laserX, laserY, 30, 30);
 
     canhaoX = CANHAO_X_ORIGINAL;
     canhaoY = CANHAO_Y_ORIGINAL;
@@ -180,6 +188,15 @@ function fimDeJogoDerrota() {
     e_backgroundLoseGame.style.display = "block";
     e_finalScoreLose.textContent = `${pontuacao.toString().padStart(5, '0')}`;
 
+    if (pontuacao > jogadorAtual.score) {
+        jogadorAtual.score = pontuacao;
+        ordenaRanking(jogadores);
+        const peopleJson = JSON.stringify(jogadores);
+        localStorage.setItem('jogadores', peopleJson);
+    }
+
+    
+
     clearInterval(intervaloAlienAtingido);
     clearInterval(intervaloMoverAliens);
     clearInterval(intervaloAparecerNave);
@@ -190,7 +207,7 @@ function fimDeJogoDerrota() {
     c.clearRect(canhaoX, canhaoY, 35, 35);
     c.clearRect(naveX, naveY, 50, 37);
     c.clearRect(alienX, alienY, 400, 200);
-    c.clearRect(laserX, laserY, 6, 19);
+    c.clearRect(laserX, laserY, 400, 600);
 
     canhaoX = CANHAO_X_ORIGINAL;
     canhaoY = CANHAO_Y_ORIGINAL;
@@ -247,3 +264,22 @@ function somAlienMexendo() {
     alienMove.play();
 }
 
+function ordenaRanking(array) {
+    let jogadorMenorPonto;
+    let posicaoJogadorMenorponto;
+
+    for (let i = 0; i < array.length; i++) {
+        jogadorMenorPonto = array[i];
+        posicaoJogadorMenorponto = i;
+
+        for (let j = i + 1; j < array.length; j++) {
+            if (array[j].score > jogadorMenorPonto.score) {
+                jogadorMenorPonto = array[j];
+                posicaoJogadorMenorponto = j;
+            }
+        }
+
+        array[posicaoJogadorMenorponto] = array[i];
+        array[i] = jogadorMenorPonto;
+    }
+}

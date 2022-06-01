@@ -30,6 +30,7 @@ canvas {
     z-index: 4;
     box-sizing: border-box;
     opacity: 0.7;
+    display: none;
 }
 
 .pontuacao-ganha {
@@ -51,6 +52,7 @@ canvas {
     z-index: 5;
     display: none;
 }
+
 .pontuacao {
     color: white;
     font-family: 'Odibee Sans', cursive;
@@ -61,6 +63,16 @@ canvas {
     font-size: 18px;
 }
 
+.hud-username {
+    color: white;
+    font-family: 'Odibee Sans', cursive;
+    font-weight: bold;
+    text-align: center;
+    position: absolute;
+    left: 175px;
+    bottom: 2px;
+    font-size: 18px;
+}
 
 .vidas-texto {
     color: white;

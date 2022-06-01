@@ -12,19 +12,22 @@
     <link href="http://fonts.cdnfonts.com/css/a-autobus-omnibus" rel="stylesheet">
     <link href="http://fonts.cdnfonts.com/css/press-start" rel="stylesheet">
     
+    <link rel="stylesheet" type="text/css" href="css/screen.css"/>
+    <link rel="stylesheet" type="text/css" href="css/username.css"/>
     <link rel="stylesheet" type="text/css" href="css/game.css"/>
     <link rel="stylesheet" type="text/css" href="css/game-win.css"/>
     <link rel="stylesheet" type="text/css" href="css/game-lose.css"/>
-    <link rel="stylesheet" type="text/css" href="css/screen.css"/>
 
+    <script src="js/main.js" defer></script>
     <script src="js/telas.js" defer></script>
     <script src="js/aliens.js" defer></script>
     <script src="js/movimentacao.js" defer></script>
     <script src="js/nave-especial.js" defer></script>
     <script src="js/hud.js" defer></script>
-    <script src="js/main.js" defer></script>
+    <script src="js/cadastro.js" defer></script>
     
 </head>
+
 <body>
     <div class="initial-game-screen">
         <img src="sprites/background-game-end.png" alt="#">
@@ -45,10 +48,30 @@
         </div>
     </div>
 
+    <div class="background-container">
+        <div class="background">
+            <img src="sprites/background-ranking-username.png" alt="#">
+        </div>
+
+        <div class="content">
+            <label class="label-username">Username</label>
+
+            <div class="input-container">
+                <input class="username" type="text" spellcheck="false" required minlength="4" maxlength="12">
+                <input class="button-submit" type="submit" value="OK">
+            </div>
+        </div>
+
+        <div>
+            <p class="back">back</p>
+        </div>
+    </div>
+
     <div class="game-container">
         <div class="ponto-nave"></div>
         <div class="hud">
             <div class="pontuacao-ganha"></div>
+            <div class="hud-username">teste</div>
             <div class="pontuacao">SCORE: 00000</div>
             <div class="vidas-texto">LIFES:</div>
             <div class="vidas">
@@ -126,5 +149,6 @@
         <p class="mouseY">mouseY = 0</p>
         <p class="naveApareceu">Nave apareceu = não, numero sorteado = </p>
     </div>
+
 </body>
 </html>

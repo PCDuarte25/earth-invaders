@@ -97,7 +97,6 @@ function alienAtingido(){
                 c.clearRect((alienX + aliensRestantes[i].posX - 1), (alienY + aliensRestantes[i].posY - 1), 20, 25);
                 aliensRestantes[i].foiAtingido = true;
                 aliensAbatido++;
-                console.log(`aliens abatidos: ${aliensAbatido}`)
                 alienHit.play();
                 c.clearRect(impactoLaserX, laserY, 6, 19);
                 laserY = 0;

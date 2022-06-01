@@ -24,7 +24,7 @@ const CANHAO_X_ORIGINAL = 180; // Default = 180;
 const VELOCIDADE_CANHAO = 8; // Default = 8
 
 const LASER_Y_ORIGINAL = 520; // Default = 520
-const INTERVALO_LASER_MOVENDO = 15; // Default = 10
+const INTERVALO_LASER_MOVENDO = 20; // Default = 10
 const VELOCIDADE_LASER = 20; // Default = 20
 
 const PONTUACAO_ALIEN_3 = 40; // Default = 40
@@ -67,6 +67,13 @@ const e_playGame = document.querySelector('.play-game');
 const e_rankingMenu = document.querySelector('.game-menu .ranking');
 const e_rankingWin = document.querySelector('.you-win-footer .ranking');
 const e_rankingLose = document.querySelector('.you-lose-footer .ranking');
+const e_hud = document.querySelector('.hud');
+const username = document.querySelector('.username');
+const btnSubmit = document.querySelector('.button-submit');
+const backBtn = document.querySelector('.back');
+const registro = document.querySelector('.background-container');
+const e_hudUsername = document.querySelector('.hud-username');
+
 
 var tela;
 var c;
@@ -86,6 +93,7 @@ var spaceShipHit;
 var gameOver;
 var gameWin;
 var scoreCounter;
+var jogadorAtual;
 
 var canhaoX = CANHAO_X_ORIGINAL;
 var canhaoY = CANHAO_Y_ORIGINAL;
@@ -128,8 +136,9 @@ const menuNavigate = new Audio('sounds/menu-navigate2.mp3');
 menuNavigate.volume = 0.1;
 
 var aliensRestantes = [];
+var jogadores = [];
 
-e_playGame.addEventListener('click', comecaJogo);
+e_playGame.addEventListener('click', comecaCadastro);
 e_playGame.addEventListener('mouseover', function(){
     menuNavigate.play();
 })
@@ -138,9 +147,9 @@ e_rankingMenu.addEventListener('mouseover', function(){
     menuNavigate.play();
 })
 
-function comecaJogo() {
-    jogoComecou = true;
-    preIniciar();
+function comecaCadastro() {
+    e_initialGameScreen.style.display = "none";
+    registro.style.display = "block";
 }
 
 

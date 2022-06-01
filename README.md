@@ -45,7 +45,7 @@ Um projeto para o meu trabalho da mateira de raciocínio lógico, e é sobre uma
 - [x] Efeitos sonoros para:
     - Movimento dos alienígenas
     - Tiro de laser do canhão
-    - Explosão do alienígena ao ser atingido pelo laser do canhão
+    - Explosão do alienígena ao ser atigngido pelo laser do canhão
     - Explosão do canhão ao ser atingido pelo laser do alienígena
     - Nave vermelha passando
 - [x] À medida em que os alienígenas são destruídos, os sobreviventes tornam-se mais rápidos, acelerando o efeito sonoro do movimento

@@ -1,0 +1,105 @@
+.background-container {
+    width: 400px;
+    height: 600px;
+    position: relative;
+    display: none;
+}
+
+.background {
+    position: absolute;
+    z-index: 0;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 200px;
+    left: calc(50% - 252px/2);
+    z-index: 1;
+}
+
+.label-username {
+    color: white;
+    font-family: 'a Autobus Omnibus', sans-serif;
+    font-size: 28px;
+    text-transform: uppercase;
+    text-shadow: -4px 4px 7px black;
+    margin-bottom: 10px;
+}
+
+.username {
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 5px;
+    background: rgb(228, 228, 228);
+    box-shadow: inset -2px 2px 7px black;
+    font-family: 'a Autobus Omnibus', sans-serif;
+    font-size: 14px;
+    text-align: center;
+    text-shadow: 2px 2px #ccc;
+}
+
+.username:focus {
+    box-shadow: inset -2px 2px 7px black, rgba(255, 102, 0, 0.9) 0px 0px 9px;
+    outline: none;
+}
+
+.username:valid {
+    box-shadow: inset -2px 2px 7px black, rgba(29, 230, 10, 0.9) 0px 0px 9px;
+    border: 2px solid rgb(29, 230, 10);
+}
+
+.username:invalid {
+    box-shadow: inset -2px 2px 7px black, rgba(253, 0, 0, 0.9) 0px 0px 9px;
+    border: 2px solid rgb(253, 0, 0);
+}
+
+.button-submit {
+    font-family: 'a Autobus Omnibus', sans-serif;
+    font-size: 16px;
+    color: white;
+    width: 80px;
+    margin: auto;
+    border: 2px solid black;
+    border-radius: 5px;
+    background: rgb(126, 125, 125);
+    cursor: pointer;
+}
+
+.button-submit:active {
+    box-shadow: inset -1px 1px 7px black;
+}
+
+.button-submit:focus {
+    outline: none;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.back {
+    font-family: 'a Autobus Omnibus', sans-serif;
+    color: white;
+    font-size: 24px;
+    text-transform: uppercase;
+    text-shadow: -4px 4px 7px black;
+    margin-bottom: 10px;
+    cursor: pointer;
+    position: absolute;
+    left: calc(50% - 75px/2);
+    bottom: 70px;
+}
+
+.back:hover {
+    transform: scale(1.3);
+    text-shadow: rgba(255, 102, 0, 0.9) 0px 0px 9px;
+}
+
+
+
+
