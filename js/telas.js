@@ -10,21 +10,31 @@ function preIniciar() {
     e_initialGameScreen.style.display = "none";
     e_hud.style.display = 'block';
 
+    e_rankingLose.addEventListener('click', abreRanking);
+    e_rankingLose.addEventListener('mouseover', function(){
+        menuNavigate.play();
+    });
+
+    e_rankingWin.addEventListener('click', abreRanking);
+    e_rankingWin.addEventListener('mouseover', function(){
+        menuNavigate.play();
+    });
+    
     e_playAgainLose.addEventListener('click', jogarDeNovo);
     e_playAgainLose.addEventListener('mouseover', function(){
         menuNavigate.play();
-    })
+    });
     e_rankingLose.addEventListener('mouseover', function(){
         menuNavigate.play();
-    })
+    });
 
     e_playAgainWin.addEventListener('click', jogarDeNovo);
     e_playAgainWin.addEventListener('mouseover', function(){
         menuNavigate.play();
-    })
+    });
     e_rankingWin.addEventListener('mouseover', function(){
         menuNavigate.play();
-    })
+    });
     
 
     // debugger na tela
@@ -134,6 +144,7 @@ function checaSeJogadorGanhou() {
 function fimDeJogoVitoria() {
     jogoRodando = false;
     jogoAcabou = true;
+    jogadorVenceu = true;
     backgroundMusic.loop = false;
     backgroundMusic.pause();
     spaceShipMoving.loop = false;
@@ -146,13 +157,14 @@ function fimDeJogoVitoria() {
     e_bonus.textContent = `${vidas}X`;
     
     intervaloContadorDePontos = setInterval(contadorDePontos, 10);
-
+    
     if (pontuacao > jogadorAtual.score) {
         jogadorAtual.score = pontuacao * vidas;
         ordenaRanking(jogadores);
         const peopleJson = JSON.stringify(jogadores);
         localStorage.setItem('jogadores', peopleJson);
     }
+    populaRanking();
 
     clearInterval(intervaloAlienAtingido);
     clearInterval(intervaloMoverAliens);
@@ -178,6 +190,7 @@ function fimDeJogoVitoria() {
 function fimDeJogoDerrota() {
     jogoRodando = false;
     jogoAcabou = true;
+    jogadorPerdeu = true;
     backgroundMusic.loop = false;
     backgroundMusic.pause();
     spaceShipMoving.loop = false;
@@ -187,15 +200,14 @@ function fimDeJogoDerrota() {
     map = {};
     e_backgroundLoseGame.style.display = "block";
     e_finalScoreLose.textContent = `${pontuacao.toString().padStart(5, '0')}`;
-
+    
     if (pontuacao > jogadorAtual.score) {
         jogadorAtual.score = pontuacao;
         ordenaRanking(jogadores);
         const peopleJson = JSON.stringify(jogadores);
         localStorage.setItem('jogadores', peopleJson);
     }
-
-    
+    populaRanking();
 
     clearInterval(intervaloAlienAtingido);
     clearInterval(intervaloMoverAliens);
@@ -222,6 +234,8 @@ function fimDeJogoDerrota() {
 function jogarDeNovo() {
     jogoRodando = true;
     jogoAcabou = false;
+    jogadorVenceu = false;
+    jogadorPerdeu = false;
     scoreCounter.pause();
     gameWin.pause();
     gameOver.pause();

@@ -91,12 +91,6 @@ function registerPerson() {
     username.value = '';
     e_hudUsername.textContent = jogadorAtual.name;
 
-    
-
-    if (JSON.parse(localStorage.getItem('jogadores'))) {
-        jogadores = JSON.parse(localStorage.getItem('jogadores'));
-    }
-
     jogadores.push(jogadorAtual);
     registro.style.display = 'none';
     jogoComecou = true;

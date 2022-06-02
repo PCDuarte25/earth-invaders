@@ -73,7 +73,10 @@ const btnSubmit = document.querySelector('.button-submit');
 const backBtn = document.querySelector('.back');
 const registro = document.querySelector('.background-container');
 const e_hudUsername = document.querySelector('.hud-username');
-
+const rankingUsernames = document.querySelectorAll('.ranking-username');
+const rankingScores = document.querySelectorAll('.ranking-score');
+const e_rankingScreen = document.querySelector('.ranking-container')
+const backBtnRanking = document.querySelector('.back-menu')
 
 var tela;
 var c;
@@ -117,6 +120,8 @@ var jogoAcabou = false;
 var jogoComecou = false;
 var jogoRodando = false;
 var acertouNaveEspecial = false;
+var jogadorPerdeu = false;
+var jogadorVenceu = false;
 
 
 var vidas = VIDAS_INICIAL;
@@ -138,11 +143,16 @@ menuNavigate.volume = 0.1;
 var aliensRestantes = [];
 var jogadores = [];
 
+if (JSON.parse(localStorage.getItem('jogadores'))) {
+    jogadores = JSON.parse(localStorage.getItem('jogadores'));
+}
+
 e_playGame.addEventListener('click', comecaCadastro);
 e_playGame.addEventListener('mouseover', function(){
     menuNavigate.play();
 })
 
+e_rankingMenu.addEventListener('click', abreRanking)
 e_rankingMenu.addEventListener('mouseover', function(){
     menuNavigate.play();
 })
@@ -150,6 +160,18 @@ e_rankingMenu.addEventListener('mouseover', function(){
 function comecaCadastro() {
     e_initialGameScreen.style.display = "none";
     registro.style.display = "block";
+}
+
+function abreRanking() {
+    if(jogoAcabou) {
+        e_rankingScreen.style.display = "block";
+        e_backgroundLoseGame.style.display = "none";
+        e_backgroundWinGame.style.display = "none";
+    } else {
+        e_initialGameScreen.style.display = "none";
+        e_rankingScreen.style.display = "block";
+    }
+    
 }
 
 
