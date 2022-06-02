@@ -1,3 +1,6 @@
+gameStart = new Audio("sounds/game-start.wav");
+gameStart.volume = 0.5;
+
 username.addEventListener('keypress', (e) => {
     const charCode = e.charCode;
     const aTxt = 'ÀÁÂÃÄàáâãä';
@@ -45,10 +48,13 @@ btnSubmit.addEventListener('click', registerPerson);
 username.addEventListener('keypress', (e) => {
     if(e.keyCode === 13) {
         registerPerson();
+        gameStart.play();
     }
 });
 
 backBtn.addEventListener('click', returnToMenu);
+backBtn.addEventListener('mouseover', function(){
+})
 
 function returnToMenu() {
     e_initialGameScreen.style.display = 'block';
@@ -85,7 +91,7 @@ function createPerson(name, score) {
 
 function registerPerson() {
     if (!username.checkValidity()) return;
-    
+    gameStart.play();
     
     jogadorAtual =  createPerson(username.value.toUpperCase(), 0);
     username.value = '';
@@ -94,5 +100,9 @@ function registerPerson() {
     jogadores.push(jogadorAtual);
     registro.style.display = 'none';
     jogoComecou = true;
-    preIniciar();
+    if (voltouProMenu) {
+        jogarDeNovo();
+    } else {
+        preIniciar();
+    }
 }

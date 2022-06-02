@@ -101,8 +101,8 @@ body {
 
 .you-lose-footer{
     position: absolute;
-    top: 480px;
-    left: 145px;
+    top: 460px;
+    left: calc(50% - 62px);
     text-align: center;
 }
 

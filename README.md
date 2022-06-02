@@ -52,9 +52,9 @@ Um projeto para o meu trabalho da mateira de raciocínio lógico, e é sobre uma
 - [x] À medida em que os alienígenas são destruídos, os sobreviventes tornam-se mais rápidos, acelerando o efeito sonoro do movimento
 - [ ] Barreiras de proteção fixas, acima canhão, conforme a figura acima
 - [ ] As barreiras de proteção deverão ser destruídas aos poucos, à medida em que forem atingidas pelos lasers
-- [ ] No final do jogo, deverá ser exibido um ranking com o nome e pontuação dos 10 (dez) melhores jogadores, exibidos em ordem decrescente de pontuação
-- [ ] O ranking deverá ser implementado por meio de um vetor de registros (objetos) e mantido pela aplicação usando persistência de dados
-- [ ] Para classificar o ranking, deverá ser usado obrigatoriamente um dos algoritmos de ordenação vistos em sala de aula
+- [x] No final do jogo, deverá ser exibido um ranking com o nome e pontuação dos 10 (dez) melhores jogadores, exibidos em ordem decrescente de pontuação
+- [x] O ranking deverá ser implementado por meio de um vetor de registros (objetos) e mantido pela aplicação usando persistência de dados
+- [x] Para classificar o ranking, deverá ser usado obrigatoriamente um dos algoritmos de ordenação vistos em sala de aula
 
 ## Bugs conhecidos
 

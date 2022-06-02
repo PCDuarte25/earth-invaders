@@ -24,7 +24,7 @@ const CANHAO_X_ORIGINAL = 180; // Default = 180;
 const VELOCIDADE_CANHAO = 8; // Default = 8
 
 const LASER_Y_ORIGINAL = 520; // Default = 520
-const INTERVALO_LASER_MOVENDO = 5; // Default = 10
+const INTERVALO_LASER_MOVENDO = 13; // Default = 10
 const VELOCIDADE_LASER = 20; // Default = 20
 
 const PONTUACAO_ALIEN_3 = 40; // Default = 40
@@ -78,6 +78,8 @@ const rankingScores = document.querySelectorAll('.ranking-score');
 const e_rankingScreen = document.querySelector('.ranking-container');
 const backBtnRanking = document.querySelector('.back-menu');
 const playerRanking = document.querySelectorAll('.player-ranking');
+const e_btnMenuWin = document.querySelector('.you-win-footer .btn-menu');
+const e_btnMenuLose = document.querySelector('.you-lose-footer .btn-menu');
 
 var tela;
 var c;
@@ -114,7 +116,7 @@ var aliensAbatido = 0;
 
 var inicioLaser = false;
 var missilFoiDisparado = false;
-var naveComecou = false
+var naveComecou = false;
 var naveComecouEsquerda = false;
 var naveComecouDireita = false;
 var jogoAcabou = false;
@@ -123,7 +125,7 @@ var jogoRodando = false;
 var acertouNaveEspecial = false;
 var jogadorPerdeu = false;
 var jogadorVenceu = false;
-
+var voltouProMenu = false;
 
 var vidas = VIDAS_INICIAL;
 var intervaloMoverNave = 0;

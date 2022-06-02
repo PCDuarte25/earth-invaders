@@ -12,6 +12,10 @@ if(!jogoComecou) {
     backBtnRanking.addEventListener('click', voltaMenuOuVoltaTelaResultado);
 }
 
+backBtnRanking.addEventListener('mouseover', function(){
+    menuNavigate.play();
+});
+
 function voltaMenuOuVoltaTelaResultado() {
     if (jogoAcabou && jogadorVenceu) {
         e_rankingScreen.style.display = "none";

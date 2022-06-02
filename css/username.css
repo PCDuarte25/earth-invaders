@@ -1,8 +1,9 @@
 .background-container {
     width: 400px;
     height: 600px;
-    position: relative;
+    position: absolute;
     display: none;
+    z-index: 20;
 }
 
 .background {

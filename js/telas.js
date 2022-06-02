@@ -10,6 +10,16 @@ function preIniciar() {
     e_initialGameScreen.style.display = "none";
     e_hud.style.display = 'block';
 
+    e_btnMenuWin.addEventListener('click', voltaMenu);
+    e_btnMenuWin.addEventListener('mouseover', function(){
+        menuNavigate.play();
+    })
+
+    e_btnMenuLose.addEventListener('click', voltaMenu);
+    e_btnMenuLose.addEventListener('mouseover', function(){
+        menuNavigate.play();
+    })
+
     e_rankingLose.addEventListener('click', abreRanking);
     e_rankingLose.addEventListener('mouseover', function(){
         menuNavigate.play();
@@ -27,6 +37,7 @@ function preIniciar() {
     e_rankingLose.addEventListener('mouseover', function(){
         menuNavigate.play();
     });
+    
 
     e_playAgainWin.addEventListener('click', jogarDeNovo);
     e_playAgainWin.addEventListener('mouseover', function(){
@@ -312,4 +323,15 @@ function definePosicaoRanking() {
             break;
         }
     }
+}
+
+function voltaMenu() {
+    jogoComecou = false;
+    jogoRodando = false;
+    jogoAcabou = false;
+    voltouProMenu = true;
+
+    e_backgroundLoseGame.style.display = "none";
+    e_backgroundWinGame.style.display = "none";
+    e_initialGameScreen.style.display = "block";
 }
