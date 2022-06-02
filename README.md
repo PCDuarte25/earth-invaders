@@ -3,6 +3,7 @@
 Um projeto para o meu trabalho da mateira de raciocínio lógico, e é sobre uma réplica do space invaders, mas eu decidi fazer "Earth Invaders"
 
 ## Sobre
+
 - Space Invaders
 - Autor: Ayo Oyewole
 - Adaptado por: Gilson Pereira
@@ -54,3 +55,8 @@ Um projeto para o meu trabalho da mateira de raciocínio lógico, e é sobre uma
 - [ ] No final do jogo, deverá ser exibido um ranking com o nome e pontuação dos 10 (dez) melhores jogadores, exibidos em ordem decrescente de pontuação
 - [ ] O ranking deverá ser implementado por meio de um vetor de registros (objetos) e mantido pela aplicação usando persistência de dados
 - [ ] Para classificar o ranking, deverá ser usado obrigatoriamente um dos algoritmos de ordenação vistos em sala de aula
+
+## Bugs conhecidos
+
+- Quando o jogador termina e não bate seu record ele continua mostrando a sua melhor colocação no ranking na tela de resultado.
+- As vezes ao terminar o jogo o missil acerta o canhão e o jogador perde o multiplicador de pontos na vitória.
