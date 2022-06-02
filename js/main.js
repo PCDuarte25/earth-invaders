@@ -24,7 +24,7 @@ const CANHAO_X_ORIGINAL = 180; // Default = 180;
 const VELOCIDADE_CANHAO = 8; // Default = 8
 
 const LASER_Y_ORIGINAL = 520; // Default = 520
-const INTERVALO_LASER_MOVENDO = 20; // Default = 10
+const INTERVALO_LASER_MOVENDO = 5; // Default = 10
 const VELOCIDADE_LASER = 20; // Default = 20
 
 const PONTUACAO_ALIEN_3 = 40; // Default = 40
@@ -75,8 +75,9 @@ const registro = document.querySelector('.background-container');
 const e_hudUsername = document.querySelector('.hud-username');
 const rankingUsernames = document.querySelectorAll('.ranking-username');
 const rankingScores = document.querySelectorAll('.ranking-score');
-const e_rankingScreen = document.querySelector('.ranking-container')
-const backBtnRanking = document.querySelector('.back-menu')
+const e_rankingScreen = document.querySelector('.ranking-container');
+const backBtnRanking = document.querySelector('.back-menu');
+const playerRanking = document.querySelectorAll('.player-ranking');
 
 var tela;
 var c;
@@ -171,7 +172,6 @@ function abreRanking() {
         e_initialGameScreen.style.display = "none";
         e_rankingScreen.style.display = "block";
     }
-    
 }
 
 

@@ -164,7 +164,9 @@ function fimDeJogoVitoria() {
         const peopleJson = JSON.stringify(jogadores);
         localStorage.setItem('jogadores', peopleJson);
     }
+
     populaRanking();
+    definePosicaoRanking()
 
     clearInterval(intervaloAlienAtingido);
     clearInterval(intervaloMoverAliens);
@@ -207,7 +209,9 @@ function fimDeJogoDerrota() {
         const peopleJson = JSON.stringify(jogadores);
         localStorage.setItem('jogadores', peopleJson);
     }
+    
     populaRanking();
+    definePosicaoRanking()
 
     clearInterval(intervaloAlienAtingido);
     clearInterval(intervaloMoverAliens);
@@ -295,5 +299,17 @@ function ordenaRanking(array) {
 
         array[posicaoJogadorMenorponto] = array[i];
         array[i] = jogadorMenorPonto;
+    }
+}
+
+function definePosicaoRanking() {
+    for (let i = 0; i < jogadores.length; i++) {
+        if (jogadorAtual.name === jogadores[i].name && jogadorAtual.score === jogadores[i].score) {
+            const posicaoRanking = i + 1;
+            for (let j = 0; j < playerRanking.length; j++) {
+                playerRanking[j].textContent = `${posicaoRanking}º`
+            }
+            break;
+        }
     }
 }

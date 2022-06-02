@@ -15,7 +15,7 @@ body {
 .you-lose-header {
     position: absolute;
     top: -20px;
-    left: 95px;
+    left: calc(50% - 116.5px);
     text-align: center;
 }
 
@@ -42,23 +42,45 @@ body {
 
 .you-lose-score {
     position: absolute;
-    top: 235px;
-    left: 95px;
+    top: 190px;
+    left: calc(50% - 99.5px);
     text-align: center;
 }
 
 .you-lose-score p:nth-child(1) {
-    font-size: 30px;
+    font-size: 26px;
     text-transform: uppercase;
     text-shadow: -4px 4px 7px black;
     margin-bottom: 10px;
 }
 
+.you-lose-score p:nth-child(3) {
+    font-size: 26px;
+    text-transform: uppercase;
+    text-shadow: -4px 4px 7px black;
+    margin-bottom: 10px;
+}
+
+
 .score-p-lose {
     margin-top: 0px;
-    font-size: 30px;
+    font-size: 26px;
     text-shadow: rgba(236, 12, 12, 0.9) 0px 0px 9px;
     margin-bottom: 0px;
+}
+
+.player-ranking {
+    margin-top: 0px;
+    font-size: 40px;
+    margin-bottom: 0px;
+    text-shadow: -4px 4px 7px black;
+}
+
+.player-ranking {
+    margin-top: 0px;
+    font-size: 40px;
+    margin-bottom: 0px;
+    text-shadow: -4px 4px 7px black;
 }
 
 .bonus {
