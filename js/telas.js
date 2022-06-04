@@ -266,7 +266,17 @@ function jogarDeNovo() {
     iniciar()
     e_backgroundLoseGame.style.display = "none";
     e_backgroundWinGame.style.display = "none";
+    for(let i = 0; i < quadradosRestantes.length; i++) {
+        if(quadradosRestantes[i].quadradoFoiAtingido) {
+            quadradosRestantes[i].quadradoFoiAtingido = false;
+        }
+    }
 
+    for(let i = 0; i < quadradosRestantes2.length; i++) {
+        if(quadradosRestantes2[i].quadradoFoiAtingido) {
+            quadradosRestantes2[i].quadradoFoiAtingido = false;
+        }
+    }
     laserX = CANHAO_X_ORIGINAL + 13;
 
     alienX = 0;

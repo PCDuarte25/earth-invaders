@@ -56,9 +56,7 @@ function moverAliens(){
             
            
             if(!limpou){
-                if ((aliensRestantes[i].posY + alienY + 23) >= 360) {
-                    c.clearRect((alienX + aliensRestantes[i].posX - 1), (alienY + aliensRestantes[i].posY - 1), 20, 25);
-                    aliensRestantes[i].foiAtingido = true;
+                if ((aliensRestantes[i].posY + alienY + 23) >= 400) {
                     
                     for (let j = 0; j < quadradosRestantes.length; j++) {
                         let quadrado = quadradosRestantes[j];
@@ -67,9 +65,19 @@ function moverAliens(){
                             c.clearRect(quadrado.posX, quadrado.posY, 5, 5);
                         }
                     }
+
+                    for (let j = 0; j < quadradosRestantes2.length; j++) {
+                        let quadrado = quadradosRestantes2[j];
+                        if(!quadrado.quadradoFoiAtingido) {
+                            quadrado.quadradoFoiAtingido = true;
+                            c.clearRect(quadrado.posX, quadrado.posY, 5, 5);
+                        }
+                    }
                     limpou = true;
-                    console.log(quadradosRestantes)
+                    // console.log(quadradosRestantes)
+                    // console.log(quadradosRestantes2)
                 }
+
             }
         }            
     }
@@ -184,6 +192,13 @@ function disparaMissil(alienAtual, posX){
     }
 
     if(quadradoAtingidoPorMissil()) {
+        clearInterval(missilMovendo);
+        missilFoiDisparado = false;
+        c.clearRect((posX), (missilY - VELOCIDADE_MISSIL - 27), 10, 27);
+        desenhaBarreira();
+    }
+
+    if(quadradoAtingidoPorMissil2()) {
         clearInterval(missilMovendo);
         missilFoiDisparado = false;
         c.clearRect((posX), (missilY - VELOCIDADE_MISSIL - 27), 10, 27);

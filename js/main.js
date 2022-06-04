@@ -5,21 +5,24 @@ const TECLA_ESQUERDA = 37; // Default = 37
 const TECLA_DIREITA = 39; // Default = 39
 const TECLA_ACIMA = 38; // Default = 38
 
-var INTERVALO_MOVER_ALIENS = 17; // Default = 17
-const INTERVALO_ALIEN_ATINGIDO = 6; // Default = 6
+var INTERVALO_MOVER_ALIENS = 25; // Default = 17
+const INTERVALO_ALIEN_ATINGIDO = 5; // Default = 6
 const VELOCIDADE_ALIEN = 1; // Default = 1
 const ALIEN_COLUNAS = [55, 85, 115, 145, 175]; // Default = [55, 85, 115, 145, 175]
 const ALIEN_LINHAS = [10, 38, 66, 94, 122, 150, 178, 206, 234, 262, 290]; // Default = [10, 38, 66, 94, 122, 150, 178, 206, 234, 262, 290]
 
 const MATRIZ_LINHAS = [45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170];
-const MATRIZ_COLUNAS = [360, 365, 370, 375, 380, 385, 390, 395, 400, 405];
+const MATRIZ_COLUNAS = [400, 405, 410, 415, 420, 425, 430, 435, 440, 445];
+
+const MATRIZ_LINHAS2 = [225, 230, 235, 240, 245, 250, 255, 260, 265, 270, 275, 280, 285, 290, 295, 300, 305, 310, 315, 320, 325, 330, 335, 340, 345, 350];
+
 
 const INTERVALO_MISSIL = 5; // Default = 40
-const VELOCIDADE_MISSIL = 1.5; // Default = 10
+const VELOCIDADE_MISSIL = 1; // Default = 10
 
 const INTERVALO_CHANCE_APARECER_NAVE = 5000;  // Default = 5000
-const INTERVALO_MOVER_NAVE = 18; // Default = 18
-const VELOCIDADE_NAVE = 3; // Default = 3
+const INTERVALO_MOVER_NAVE = 5; // Default = 18
+const VELOCIDADE_NAVE = 1; // Default = 3
 const CHANCE_APARECER_NAVE = 0.2; // Default = 0.2
 
 const CANHAO_Y_ORIGINAL = 529; // Default = 529
@@ -35,7 +38,6 @@ const ALTURA_LASER = 19
 const PONTUACAO_ALIEN_3 = 40; // Default = 40
 const PONTUACAO_ALIEN_2 = 20; // Default = 20
 const PONTUACAO_ALIEN = 10; // Default = 10
-
 const VIDAS_INICIAL = 3;
 // debugger na tela
 
@@ -153,6 +155,7 @@ menuNavigate.volume = 0.1;
 var aliensRestantes = [];
 var jogadores = [];
 var quadradosRestantes = [];
+var quadradosRestantes2 = [];
 
 if (JSON.parse(localStorage.getItem('jogadores'))) {
     jogadores = JSON.parse(localStorage.getItem('jogadores'));
