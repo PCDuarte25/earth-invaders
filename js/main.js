@@ -5,14 +5,17 @@ const TECLA_ESQUERDA = 37; // Default = 37
 const TECLA_DIREITA = 39; // Default = 39
 const TECLA_ACIMA = 38; // Default = 38
 
-var INTERVALO_MOVER_ALIENS = 40; // Default = 17
+var INTERVALO_MOVER_ALIENS = 17; // Default = 17
 const INTERVALO_ALIEN_ATINGIDO = 6; // Default = 6
 const VELOCIDADE_ALIEN = 1; // Default = 1
 const ALIEN_COLUNAS = [55, 85, 115, 145, 175]; // Default = [55, 85, 115, 145, 175]
 const ALIEN_LINHAS = [10, 38, 66, 94, 122, 150, 178, 206, 234, 262, 290]; // Default = [10, 38, 66, 94, 122, 150, 178, 206, 234, 262, 290]
 
-const INTERVALO_MISSIL = 40; // Default = 40
-const VELOCIDADE_MISSIL = 10; // Default = 10
+const MATRIZ_LINHAS = [45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170];
+const MATRIZ_COLUNAS = [360, 365, 370, 375, 380, 385, 390, 395, 400, 405];
+
+const INTERVALO_MISSIL = 5; // Default = 40
+const VELOCIDADE_MISSIL = 1.5; // Default = 10
 
 const INTERVALO_CHANCE_APARECER_NAVE = 5000;  // Default = 5000
 const INTERVALO_MOVER_NAVE = 18; // Default = 18
@@ -24,8 +27,10 @@ const CANHAO_X_ORIGINAL = 180; // Default = 180;
 const VELOCIDADE_CANHAO = 8; // Default = 8
 
 const LASER_Y_ORIGINAL = 520; // Default = 520
-const INTERVALO_LASER_MOVENDO = 13; // Default = 10
-const VELOCIDADE_LASER = 20; // Default = 20
+const INTERVALO_LASER_MOVENDO = 5; // Default = 10
+const VELOCIDADE_LASER = 5; // Default = 20
+const LARGURA_LASER = 5;
+const ALTURA_LASER = 19
 
 const PONTUACAO_ALIEN_3 = 40; // Default = 40
 const PONTUACAO_ALIEN_2 = 20; // Default = 20
@@ -100,6 +105,7 @@ var gameOver;
 var gameWin;
 var scoreCounter;
 var jogadorAtual;
+var barreira;
 
 var canhaoX = CANHAO_X_ORIGINAL;
 var canhaoY = CANHAO_Y_ORIGINAL;
@@ -139,12 +145,14 @@ var impactoLaserX;
 var somador = 0;
 var intervaloContadorDePontos = 0;
 var intervaloSomAlienSeMexendo = 0;
+var intervaloQuadradoAntingido = 0;
 
 const menuNavigate = new Audio('sounds/menu-navigate2.mp3');
 menuNavigate.volume = 0.1;
 
 var aliensRestantes = [];
 var jogadores = [];
+var quadradosRestantes = [];
 
 if (JSON.parse(localStorage.getItem('jogadores'))) {
     jogadores = JSON.parse(localStorage.getItem('jogadores'));
@@ -176,4 +184,10 @@ function abreRanking() {
     }
 }
 
+function desenhaHitBox(posicaoX, posicaoY, largura, altura) {
+    c.strokeStyle = 'red';
+    c.lineWidth = 1;
+    c.rect(posicaoX, posicaoY, largura, altura);
+    c.stroke();
+}
 

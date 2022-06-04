@@ -34,6 +34,7 @@ onkeydown = onkeyup = function(e){
 
 function dispararLaser(){
     if (inicioLaser && (laserY >= 0)){
+        quadradoAtingidoPorLaser();
         laserY -= VELOCIDADE_LASER;
         c.clearRect(impactoLaserX, (laserY + VELOCIDADE_LASER), 6, 19);
 		

@@ -64,12 +64,14 @@ function iniciar() {
     carregarImagens();
     carregarSons();
     backgroundMusic.play();
+    posicionarMatriz();
     
-    INTERVALO_MOVER_ALIENS = 40;
+    // INTERVALO_MOVER_ALIENS = 40;
     aliensAbatido = 0;
     intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
     intervaloAlienAtingido = setInterval("alienAtingido()", INTERVALO_ALIEN_ATINGIDO);
     intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
+
     
     intervaloAparecerNave = setInterval(defineChanceAparecerNave, INTERVALO_CHANCE_APARECER_NAVE);
     intervaloMoverNave = setInterval(moverNave, INTERVALO_MOVER_NAVE);
@@ -106,6 +108,12 @@ function carregarImagens() {
 
     naveEspecial = new Image();
     naveEspecial.src = "sprites/special-ship.png"
+
+    barreira = new Image();
+    barreira.src = "sprites/barrier.png";
+    barreira.onload = function() {
+        desenhaBarreira();
+    }
 }
 
 function carregarSons() {

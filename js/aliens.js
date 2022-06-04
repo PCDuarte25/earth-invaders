@@ -11,7 +11,7 @@ function posicionarAlien() {
         }
     }
 }
-
+var limpou = false
 function moverAliens(){
     if (posicao <= 65){
         alienX += VELOCIDADE_ALIEN;
@@ -52,8 +52,26 @@ function moverAliens(){
             
             if ((aliensRestantes[i].posY + alienY + 23) >= CANHAO_Y_ORIGINAL){
                 fimDeJogoDerrota();
+            }  
+            
+           
+            if(!limpou){
+                if ((aliensRestantes[i].posY + alienY + 23) >= 360) {
+                    c.clearRect((alienX + aliensRestantes[i].posX - 1), (alienY + aliensRestantes[i].posY - 1), 20, 25);
+                    aliensRestantes[i].foiAtingido = true;
+                    
+                    for (let j = 0; j < quadradosRestantes.length; j++) {
+                        let quadrado = quadradosRestantes[j];
+                        if(!quadrado.quadradoFoiAtingido) {
+                            quadrado.quadradoFoiAtingido = true;
+                            c.clearRect(quadrado.posX, quadrado.posY, 5, 5);
+                        }
+                    }
+                    limpou = true;
+                    console.log(quadradosRestantes)
+                }
             }
-        }
+        }            
     }
 
     for (let i = 0; i < aliensRestantes.length; i++) {
@@ -76,7 +94,7 @@ function alienAtingido(){
                 && (impactoLaserX <= (posicaoRealX + 18))){
 
                               
-            if (!aa.foiAtingido) {  
+            if (!aa.foiAtingido) { 
                 if (i % 5 === 0 || i % 5 === 1) {
                     pontuacao += PONTUACAO_ALIEN_3;
                     mostraPontoGanho(PONTUACAO_ALIEN_3);
@@ -96,14 +114,13 @@ function alienAtingido(){
             if (!aa.foiAtingido){
                 c.clearRect((alienX + aliensRestantes[i].posX - 1), (alienY + aliensRestantes[i].posY - 1), 20, 25);
                 aliensRestantes[i].foiAtingido = true;
-                aliensAbatido++;
                 alienHit.play();
                 c.clearRect(impactoLaserX, laserY, 6, 19);
                 laserY = 0;
                 checaSeJogadorGanhou() 
             }
             
-            aceleraAliens(aliensAbatido);
+            // aceleraAliens(aliensAbatido);
             
         }
     }    
@@ -166,6 +183,13 @@ function disparaMissil(alienAtual, posX){
         }
     }
 
+    if(quadradoAtingidoPorMissil()) {
+        clearInterval(missilMovendo);
+        missilFoiDisparado = false;
+        c.clearRect((posX), (missilY - VELOCIDADE_MISSIL - 27), 10, 27);
+        desenhaBarreira();
+    }
+
     removeVida(vidas);
     // Debugger na tela
 
@@ -179,36 +203,25 @@ function disparaMissil(alienAtual, posX){
     }
 }
 
-function aceleraAliens(aliensAbatido) {
-    if (aliensAbatido === 10) {
-        INTERVALO_MOVER_ALIENS = 30;
-        clearInterval(intervaloMoverAliens);
-        clearInterval(intervaloSomAlienSeMexendo);
-        intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
-        intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
-    } else if (aliensAbatido === 20) {
-        INTERVALO_MOVER_ALIENS = 20;
-        clearInterval(intervaloMoverAliens);
-        clearInterval(intervaloSomAlienSeMexendo);
-        intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
-        intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
-    } else if (aliensAbatido === 30) {
-        INTERVALO_MOVER_ALIENS = 15;
-        clearInterval(intervaloMoverAliens);
-        clearInterval(intervaloSomAlienSeMexendo);
-        intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
-        intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
-    } else if (aliensAbatido === 40) {
-        INTERVALO_MOVER_ALIENS = 12;
-        clearInterval(intervaloMoverAliens);
-        clearInterval(intervaloSomAlienSeMexendo);
-        intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
-        intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
-    } else if (aliensAbatido === 50) {
-        INTERVALO_MOVER_ALIENS = 10;
-        clearInterval(intervaloMoverAliens);
-        clearInterval(intervaloSomAlienSeMexendo);
-        intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
-        intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
-    } 
-}
+// function aceleraAliens(aliensAbatido) {
+//     if (aliensAbatido === 10) {
+//         INTERVALO_MOVER_ALIENS = 40;
+//         clearInterval(intervaloMoverAliens);
+//         clearInterval(intervaloSomAlienSeMexendo);
+//         intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
+//         intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
+//     } else if (aliensAbatido === 30) {
+//         INTERVALO_MOVER_ALIENS = 20;
+//         clearInterval(intervaloMoverAliens);
+//         clearInterval(intervaloSomAlienSeMexendo);
+//         intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
+//         intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
+//     } else if (aliensAbatido === 50) {
+//         INTERVALO_MOVER_ALIENS = 15;
+//         clearInterval(intervaloMoverAliens);
+//         clearInterval(intervaloSomAlienSeMexendo);
+//         intervaloMoverAliens = setInterval("moverAliens()", INTERVALO_MOVER_ALIENS);
+//         intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, (INTERVALO_MOVER_ALIENS * 8))
+//     } 
+    
+// }
