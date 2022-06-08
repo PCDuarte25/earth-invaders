@@ -11,60 +11,67 @@ function posicionarAlien() {
         }
     }
 }
-var limpou = false
+
 function moverAliens(){
     if (posicao <= 65){
         alienX += VELOCIDADE_ALIEN;
-        posicao += 1;
+        posicao += VELOCIDADE_ALIEN;
     } else if ((posicao > 65) && (posicao <= 80)){
         alienX += VELOCIDADE_ALIEN;
         alienY += VELOCIDADE_ALIEN;
-        posicao += 1;           
+        posicao += VELOCIDADE_ALIEN;           
     } else if ((posicao > 80) && (posicao <= 147)){
+        if (alienX <= 0) {
+            alienX = 0;
+        }
         alienX -= VELOCIDADE_ALIEN;
-        posicao += 1;
+        posicao += VELOCIDADE_ALIEN;
     } else if ((posicao > 147) && (posicao < 162)){
+        if (alienX <= 0) {
+            alienX = 0;
+        }
         alienX -= VELOCIDADE_ALIEN;
         alienY += VELOCIDADE_ALIEN;
-        posicao += 1;
+        posicao += VELOCIDADE_ALIEN;
     } else {
-        posicao = 0;
+        posicao = 0 + VELOCIDADE_ALIEN;
     }
-    
-    // Debugger na tela
-
-    // t_alienX.textContent = `alienX = ${alienX}` 
-    // t_alienY.textContent = `alienY = ${alienY}` 
 
     for (var i = 0; i < aliensRestantes.length; i++){
 
         if (!aliensRestantes[i].foiAtingido){
             if (i % 5 === 0 || i % 5 === 1) {
-                c.clearRect((alienX + aliensRestantes[i].posX - VELOCIDADE_ALIEN), (alienY + aliensRestantes[i].posY - VELOCIDADE_ALIEN), 20, 25);
+                c.clearRect((alienX + aliensRestantes[i].posX - VELOCIDADE_ALIEN), (alienY + aliensRestantes[i].posY - VELOCIDADE_ALIEN), 21, 25);
                 c.drawImage(alien3, (alienX + aliensRestantes[i].posX), (alienY + aliensRestantes[i].posY));
             } else if (i % 5 === 2 || i % 5 === 3) {
-                c.clearRect((alienX + aliensRestantes[i].posX - VELOCIDADE_ALIEN), (alienY + aliensRestantes[i].posY - VELOCIDADE_ALIEN), 20, 25);
+                c.clearRect((alienX + aliensRestantes[i].posX - VELOCIDADE_ALIEN), (alienY + aliensRestantes[i].posY - VELOCIDADE_ALIEN), 21, 25);
                 c.drawImage(alien2, (alienX + aliensRestantes[i].posX), (alienY + aliensRestantes[i].posY));
             } else {
-                c.clearRect((alienX + aliensRestantes[i].posX - VELOCIDADE_ALIEN), (alienY + aliensRestantes[i].posY - VELOCIDADE_ALIEN), 20, 25);
+                c.clearRect((alienX + aliensRestantes[i].posX - VELOCIDADE_ALIEN), (alienY + aliensRestantes[i].posY - VELOCIDADE_ALIEN), 21, 25);
                 c.drawImage(alien, (alienX + aliensRestantes[i].posX), (alienY + aliensRestantes[i].posY));
             }
             
             if ((aliensRestantes[i].posY + alienY + 23) >= CANHAO_Y_ORIGINAL){
                 fimDeJogoDerrota();
-            }  
+            }
+
+            if(jogoAcabou) {
+                c.clearRect(alienX, alienY, 400, 600);
+            }
             
-           
             alienAcertouBarreira2();
             alienAcertouBarreira();
         }            
     }
 
-    for (let i = 0; i < aliensRestantes.length; i++) {
-        if (!aliensRestantes[i].foiAtingido){
-            enfileraMissil();
-            break;
+    if (Date.now() > INTERVALO_ENTRE_DISPAROS_MISSIL + ultimoDateDoDisparoMissil) {
+        for (let i = 0; i < aliensRestantes.length; i++) {
+            if (!aliensRestantes[i].foiAtingido){
+                enfileraMissil();
+                break;
+            }
         }
+        ultimoDateDoDisparoMissil = Date.now();
     }
 }
 
@@ -98,6 +105,7 @@ function alienAtingido(){
             e_pontuacao.textContent = `SCORE: ${pontuacao.toString().padStart(5, '0')}`
             
             if (!aa.foiAtingido){
+                aliensAbatido++;
                 c.clearRect((alienX + aliensRestantes[i].posX - 1), (alienY + aliensRestantes[i].posY - 1), 20, 25);
                 aliensRestantes[i].foiAtingido = true;
                 alienHit.play();
@@ -106,7 +114,7 @@ function alienAtingido(){
                 checaSeJogadorGanhou() 
             }
             
-            // aceleraAliens(aliensAbatido);
+            aceleraAliens(aliensAbatido);
             
         }
     }    
@@ -184,10 +192,6 @@ function disparaMissil(alienAtual, posX){
     }
 
     removeVida(vidas);
-    // Debugger na tela
-
-    // t_missilY.textContent = `missilY = ${missilY}`
-    // t_missilX.textContent = `missilX = ${missilX}`
     
     if (missilY >= C_ALTURA + 35) {
         clearInterval(missilMovendo);
@@ -211,15 +215,7 @@ function alienAcertouBarreira() {
                     && (quadrado.posX + 5 >= alienX + alien.posX)
                     && (quadrado.posX <= alienX + alien.posX + 18)
                 ) {
-
-                    for (let k = 0; k < quadradosRestantes.length; k++) {
-                        let quadrado = quadradosRestantes[k];
-                        if(!quadrado.quadradoFoiAtingido) {
-                            quadrado.quadradoFoiAtingido = true;
-                            c.clearRect(quadrado.posX, quadrado.posY, 5, 5);
-                        }
-                    }
-
+                    apagaBarreira(quadradosRestantes);
                     alien.foiAtingido = true;
                     c.clearRect(alienX + alien.posX, alienY + alien.posY, 18, 23);
                 }
@@ -243,19 +239,44 @@ function alienAcertouBarreira2() {
                     && (quadrado.posX + 5 >= alienX + alien.posX)
                     && (quadrado.posX <= alienX + alien.posX + 18)
                 ) {
-
-                    for (let k = 0; k < quadradosRestantes2.length; k++) {
-                        let quadrado = quadradosRestantes2[k];
-                        if(!quadrado.quadradoFoiAtingido) {
-                            quadrado.quadradoFoiAtingido = true;
-                            c.clearRect(quadrado.posX, quadrado.posY, 5, 5);
-                        }
-                    }
-
+                    apagaBarreira(quadradosRestantes2);
                     alien.foiAtingido = true;
                     c.clearRect(alienX + alien.posX, alienY + alien.posY, 18, 23);
                 }
             } 
+        }
+    }
+}
+
+function aceleraAliens(aliensAbatido) {
+    if(aliensAbatido === 10) {
+        VELOCIDADE_ALIEN = 0.5;
+        clearInterval(intervaloSomAlienSeMexendo);
+        intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, 500);
+    }
+    if(aliensAbatido === 20) {
+        VELOCIDADE_ALIEN = 0.7;
+        clearInterval(intervaloSomAlienSeMexendo);
+        intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, 300);
+    }
+    if(aliensAbatido === 30) {
+        VELOCIDADE_ALIEN = 0.9;
+        clearInterval(intervaloSomAlienSeMexendo);
+        intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, 100);
+    }
+    if(aliensAbatido === 40) {
+        VELOCIDADE_ALIEN = 1.1;
+        clearInterval(intervaloSomAlienSeMexendo);
+        intervaloSomAlienSeMexendo = setInterval(somAlienMexendo, 20);
+    }
+}
+
+function apagaBarreira(array) {
+    for (let k = 0; k < array.length; k++) {
+        let quadrado = array[k];
+        if(!quadrado.quadradoFoiAtingido) {
+            quadrado.quadradoFoiAtingido = true;
+            c.clearRect(quadrado.posX, quadrado.posY, 5, 5);
         }
     }
 }

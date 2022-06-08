@@ -95,15 +95,13 @@ function marcaQuadradoComoAtingido2(linha, coluna) {
 }
 
 function quadradoAtingidoPorLaser() {
-    for (let i = 0; i < quadradosRestantes.length; i++) {
+    for (let i = quadradosRestantes.length - 1; i >= 0; i--) {
         if(
-            laserY >= quadradosRestantes[i].posY
-            && laserY <= quadradosRestantes[i].posY + 5
+            laserY - 19 <= quadradosRestantes[i].posY + 5
             && impactoLaserX >= quadradosRestantes[i].posX - 5 
             && impactoLaserX <= quadradosRestantes[i].posX + 5
         ) { 
             if (!quadradosRestantes[i].quadradoFoiAtingido) {
-                // console.log(`coluna: ${colunaAtravesDeIndice(i)} linha: ${linhaAtravesDeIndice(i)} indice: ${i} `);
                 c.clearRect(quadradosRestantes[i].posX, quadradosRestantes[i].posY, 5, 5);
                 c.clearRect(quadradosRestantes[i].posX, quadradosRestantes[i].posY - 5 ,5, 5);
                 c.clearRect(quadradosRestantes[i].posX, quadradosRestantes[i].posY - 10, 5, 5);
@@ -123,19 +121,18 @@ function quadradoAtingidoPorLaser() {
                 laserY = 0;
 
                 desenhaBarreira();
+                break;
             }
         } 
     }
 
-    for (let i = 0; i < quadradosRestantes2.length; i++) {
+    for (let i = quadradosRestantes2.length - 1; i >= 0; i--) {
         if(
-            laserY >= quadradosRestantes2[i].posY
-            && laserY <= quadradosRestantes2[i].posY + 5
+            laserY - 19 <= quadradosRestantes2[i].posY + 5
             && impactoLaserX >= quadradosRestantes2[i].posX - 5 
             && impactoLaserX <= quadradosRestantes2[i].posX + 5
         ) { 
             if (!quadradosRestantes2[i].quadradoFoiAtingido) {
-                // console.log(`coluna: ${colunaAtravesDeIndice(i)} linha: ${linhaAtravesDeIndice(i)} indice: ${i} `);
                 c.clearRect(quadradosRestantes2[i].posX, quadradosRestantes2[i].posY, 5, 5);
                 c.clearRect(quadradosRestantes2[i].posX, quadradosRestantes2[i].posY - 5 ,5, 5);
                 c.clearRect(quadradosRestantes2[i].posX, quadradosRestantes2[i].posY - 10, 5, 5);
@@ -155,6 +152,7 @@ function quadradoAtingidoPorLaser() {
                 laserY = 0;
 
                 desenhaBarreira();
+                break;
             }
         } 
     }
@@ -169,7 +167,6 @@ function quadradoAtingidoPorMissil() {
             && missilX <= quadradosRestantes[i].posX + 5
         ) { 
             if (!quadradosRestantes[i].quadradoFoiAtingido) {
-                // console.log(`coluna: ${colunaAtravesDeIndice(i)} linha: ${linhaAtravesDeIndice(i)} indice: ${i} `);
                 c.clearRect(quadradosRestantes[i].posX, quadradosRestantes[i].posY, 5, 5);
                 c.clearRect(quadradosRestantes[i].posX, quadradosRestantes[i].posY - 5 ,5, 5);
                 c.clearRect(quadradosRestantes[i].posX, quadradosRestantes[i].posY - 10, 5, 5);
@@ -200,7 +197,6 @@ function quadradoAtingidoPorMissil2() {
             && missilX <= quadradosRestantes2[i].posX + 5
         ) { 
             if (!quadradosRestantes2[i].quadradoFoiAtingido) {
-                // console.log(`coluna: ${colunaAtravesDeIndice(i)} linha: ${linhaAtravesDeIndice(i)} indice: ${i} `);
                 c.clearRect(quadradosRestantes2[i].posX, quadradosRestantes2[i].posY, 5, 5);
                 c.clearRect(quadradosRestantes2[i].posX, quadradosRestantes2[i].posY - 5 ,5, 5);
                 c.clearRect(quadradosRestantes2[i].posX, quadradosRestantes2[i].posY - 10, 5, 5);
@@ -216,10 +212,8 @@ function quadradoAtingidoPorMissil2() {
                 marcaQuadradoComoAtingido2(linha + 1, coluna + 1);
                 marcaQuadradoComoAtingido2(linha + 1, coluna - 1);
                 return true;
-    
             }
         }
     }
-
     return false;
 }

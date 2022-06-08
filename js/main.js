@@ -5,55 +5,39 @@ const TECLA_ESQUERDA = 37; // Default = 37
 const TECLA_DIREITA = 39; // Default = 39
 const TECLA_ACIMA = 38; // Default = 38
 
-var INTERVALO_MOVER_ALIENS = 25; // Default = 17
-const INTERVALO_ALIEN_ATINGIDO = 5; // Default = 6
-const VELOCIDADE_ALIEN = 1; // Default = 1
-const ALIEN_COLUNAS = [55, 85, 115, 145, 175]; // Default = [55, 85, 115, 145, 175]
-const ALIEN_LINHAS = [10, 38, 66, 94, 122, 150, 178, 206, 234, 262, 290]; // Default = [10, 38, 66, 94, 122, 150, 178, 206, 234, 262, 290]
+let VELOCIDADE_ALIEN = 0.2; // Default = 0.2
+let INTERVALO_SOM_ALIEN_MEXENDO = 1000; // Default = 1000
+const ALIEN_COLUNAS = [55, 85, 115, 145, 175];
+const ALIEN_LINHAS = [10, 38, 66, 94, 122, 150, 178, 206, 234, 262, 290];
 
 const MATRIZ_LINHAS = [45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170];
 const MATRIZ_COLUNAS = [400, 405, 410, 415, 420, 425, 430, 435, 440, 445];
 
 const MATRIZ_LINHAS2 = [225, 230, 235, 240, 245, 250, 255, 260, 265, 270, 275, 280, 285, 290, 295, 300, 305, 310, 315, 320, 325, 330, 335, 340, 345, 350];
 
-
-const INTERVALO_MISSIL = 5; // Default = 40
-const VELOCIDADE_MISSIL = 1; // Default = 10
+const INTERVALO_MISSIL = 5; // Default = 5
+const VELOCIDADE_MISSIL = 1.4; // Default = 1.4
+const INTERVALO_ENTRE_DISPAROS_MISSIL = 1500; // Default = 1500
 
 const INTERVALO_CHANCE_APARECER_NAVE = 5000;  // Default = 5000
 const VELOCIDADE_NAVE = 3; // Default = 3
-const CHANCE_APARECER_NAVE = 0.8; // Default = 0.2
+const CHANCE_APARECER_NAVE = 0.2; // Default = 0.2
 
 const CANHAO_Y_ORIGINAL = 529; // Default = 529
 const CANHAO_X_ORIGINAL = 180; // Default = 180;
 const VELOCIDADE_CANHAO = 8; // Default = 8
 
 const LASER_Y_ORIGINAL = 520; // Default = 520
-const INTERVALO_LASER_MOVENDO = 5; // Default = 10
-const VELOCIDADE_LASER = 5; // Default = 20
-const LARGURA_LASER = 5;
-const ALTURA_LASER = 19
+const VELOCIDADE_LASER = 12; // Default = 20
+const LARGURA_LASER = 5; // Default = 5
+const ALTURA_LASER = 19 // Default = 19
+const INTERVALO_ENTRE_DISPAROS_LASER = 200; // Default = 200;
 
 const PONTUACAO_ALIEN_3 = 40; // Default = 40
 const PONTUACAO_ALIEN_2 = 20; // Default = 20
 const PONTUACAO_ALIEN = 10; // Default = 10
 const VIDAS_INICIAL = 3;
-// debugger na tela
 
-// const t_canhaoX = document.querySelector('.canhaoX');
-// const t_canhaoY = document.querySelector('.canhaoY');
-// const t_missilX = document.querySelector('.missilX');
-// const t_missilY = document.querySelector('.missilY');
-// const t_alienX = document.querySelector('.alienX');
-// const t_alienY = document.querySelector('.alienY');
-// const t_alienAtirador = document.querySelector('.alienAtirador');
-const t_mouseX = document.querySelector('.mouseX');
-const t_mouseY = document.querySelector('.mouseY');
-const t_naveX = document.querySelector('.naveX');
-const t_naveY = document.querySelector('.naveY');
-const t_laserX = document.querySelector('.laserX');
-const t_laserY = document.querySelector('.laserY');
-const t_naveApareceu = document.querySelector('.naveApareceu');
 const e_vidas = document.querySelector('.vidas');
 const vidaUm = document.querySelector('.vida-um');
 const vidaDois = document.querySelector('.vida-dois');
@@ -96,7 +80,6 @@ var laser;
 var alien;
 var background; 
 var backgroundImage;
-var laserMovendo;
 var alienHit;
 var canonHit;
 var backgroundMusic;
@@ -135,26 +118,25 @@ var jogadorVenceu = false;
 var voltouProMenu = false;
 
 var vidas = VIDAS_INICIAL;
-var intervaloMoverNave = 0;
 var apagaPontoGanhoIdTimeOut = 0;
 var posicao = 0;
 var pontuacao = 0;
 var intervaloAparecerNave = 0;
-var laserMovendo;
 var missilMovendo;
 var impactoLaserX;
 var somador = 0;
 var intervaloContadorDePontos = 0;
 var intervaloSomAlienSeMexendo = 0;
-var intervaloQuadradoAntingido = 0;
-
-const menuNavigate = new Audio('sounds/menu-navigate2.mp3');
-menuNavigate.volume = 0.1;
+var ultimoDateDoDisparoMissil = 0;
+var ultimoDateDoDisparoLaser = 0;
 
 var aliensRestantes = [];
 var jogadores = [];
 var quadradosRestantes = [];
 var quadradosRestantes2 = [];
+
+const menuNavigate = new Audio('sounds/menu-navigate2.mp3');
+menuNavigate.volume = 0.1;
 
 if (JSON.parse(localStorage.getItem('jogadores'))) {
     jogadores = JSON.parse(localStorage.getItem('jogadores'));
@@ -193,3 +175,17 @@ function desenhaHitBox(posicaoX, posicaoY, largura, altura) {
     c.stroke();
 }
 
+
+function frameDoJogo() {
+    if(jogoRodando) {
+        moverAliens();
+        alienAtingido();
+        moverNave();
+
+        if(inicioLaser) {
+            dispararLaser();
+        }
+    }
+   
+    requestAnimationFrame(frameDoJogo);
+}

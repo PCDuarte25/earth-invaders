@@ -3,11 +3,7 @@ function defineChanceAparecerNave() {
 
     let chanceNaveAparecer = parseFloat(Math.random().toFixed(1));
     if(chanceNaveAparecer <= CHANCE_APARECER_NAVE) {
-        spaceShipMoving.play();
-        t_naveApareceu.textContent = `nave apareceu = sim, numero sorteado = ${chanceNaveAparecer}`
         defineComecoNave();
-    } else {
-        t_naveApareceu.textContent = `nave apareceu = não, numero sorteado = ${chanceNaveAparecer}`
     }
 }
 
@@ -27,11 +23,10 @@ function defineComecoNave() {
 }
 
 function moverNave() {
-    requestAnimationFrame(moverNave)
     if(!naveComecou) return;
 
     laserAcertouNave()
-
+    spaceShipMoving.play();
     if (naveComecouEsquerda) {
         naveX += VELOCIDADE_NAVE;
     } 
@@ -39,7 +34,6 @@ function moverNave() {
     if(naveX > 400 && naveComecouEsquerda) {
         naveComecou = false;
         spaceShipMoving.loop = false;
-        spaceShipMoving.pause();
     }
 
     if(naveComecouDireita) {
@@ -49,12 +43,7 @@ function moverNave() {
     if(naveX < -52 && naveComecouDireita) {
         naveComecou = false;
         spaceShipMoving.loop = false;
-        spaceShipMoving.pause();
     }
-
-    // Debugger tela incial
-    t_naveX.textContent = `naveX = ${naveX}`;
-    t_naveY.textContent = `naveY = ${naveY}`;
     
     const offset = naveComecouEsquerda ? -VELOCIDADE_NAVE : VELOCIDADE_NAVE;
 
@@ -62,17 +51,15 @@ function moverNave() {
 
     c.clearRect(naveX + offset, naveY, 52, 37);
     c.drawImage(naveEspecial, naveX, naveY);
-
 }
 
-function laserAcertouNave(){
+function laserAcertouNave() {
     if ((laserY <= naveY + 30 && laserY !== 0) && (laserY >= naveY) && (impactoLaserX >= naveX) && (impactoLaserX + 6 <= naveX + 55)) {
         acertouNaveEspecial = true;
         spaceShipHit.play();
         spaceShipMoving.loop = false;
-        spaceShipMoving.pause();
-        c.clearRect(naveX, naveY, 400, 37);
         naveComecou = false;
+        c.clearRect(naveX, naveY, 400, 37);
         c.clearRect(impactoLaserX, laserY, 6, 19);
         laserY = 0;
         const pontoNave = Math.floor((Math.random() * 50)) + 50;

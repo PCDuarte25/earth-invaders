@@ -20,15 +20,17 @@ onkeydown = onkeyup = function(e){
             c.drawImage(canhao, canhaoX, canhaoY);
         }
     }
-
-    if (map[TECLA_ACIMA]) {
-        if (!inicioLaser) {
-            laserShoot.play();
-            inicioLaser = true;
-            c.drawImage(laser, laserX, laserY);
-            impactoLaserX = laserX;
-            laserMovendo = setInterval("dispararLaser()", INTERVALO_LASER_MOVENDO);
-        }   
+    
+    if(Date.now() > INTERVALO_ENTRE_DISPAROS_LASER + ultimoDateDoDisparoLaser) {
+        if (map[TECLA_ACIMA]) {
+            if (!inicioLaser) {
+                laserShoot.play();
+                inicioLaser = true;
+                c.drawImage(laser, laserX, laserY);
+                impactoLaserX = laserX;
+                ultimoDateDoDisparoLaser = Date.now();
+            }   
+        }
     }
 }
 
@@ -44,12 +46,7 @@ function dispararLaser(){
     }
 	
     if (laserY < 0){
-        clearInterval(laserMovendo);
         inicioLaser = false;
         laserY = LASER_Y_ORIGINAL;
     }
-
-    // debugger na tela
-    t_laserX.textContent = `laserX = ${laserX}`
-    t_laserY.textContent = `laserY = ${laserY}`
 }
