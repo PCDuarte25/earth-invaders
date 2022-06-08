@@ -74,8 +74,7 @@ function iniciar() {
 
     
     intervaloAparecerNave = setInterval(defineChanceAparecerNave, INTERVALO_CHANCE_APARECER_NAVE);
-    intervaloMoverNave = setInterval(moverNave, INTERVALO_MOVER_NAVE);
-
+    moverNave()
 }
 
 function carregarImagens() {

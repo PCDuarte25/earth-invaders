@@ -21,9 +21,8 @@ const INTERVALO_MISSIL = 5; // Default = 40
 const VELOCIDADE_MISSIL = 1; // Default = 10
 
 const INTERVALO_CHANCE_APARECER_NAVE = 5000;  // Default = 5000
-const INTERVALO_MOVER_NAVE = 5; // Default = 18
-const VELOCIDADE_NAVE = 1; // Default = 3
-const CHANCE_APARECER_NAVE = 0.2; // Default = 0.2
+const VELOCIDADE_NAVE = 3; // Default = 3
+const CHANCE_APARECER_NAVE = 0.8; // Default = 0.2
 
 const CANHAO_Y_ORIGINAL = 529; // Default = 529
 const CANHAO_X_ORIGINAL = 180; // Default = 180;

@@ -45,7 +45,7 @@ function posicionarMatriz() {
 function desenhaBarreira() {
     c.drawImage(barreira, 45, 400);
     for (let i = 0; i < quadradosRestantes.length; i++) {
-        let quadrado = quadradosRestantes[i];
+        let quadrado = quadradosRestantes[i]; 
         if (quadrado.quadradoFoiAtingido) {
             c.clearRect(quadrado.posX, quadrado.posY, 5, 5);
         } 

@@ -27,6 +27,7 @@ function defineComecoNave() {
 }
 
 function moverNave() {
+    requestAnimationFrame(moverNave)
     if(!naveComecou) return;
 
     laserAcertouNave()
@@ -61,6 +62,7 @@ function moverNave() {
 
     c.clearRect(naveX + offset, naveY, 52, 37);
     c.drawImage(naveEspecial, naveX, naveY);
+
 }
 
 function laserAcertouNave(){
